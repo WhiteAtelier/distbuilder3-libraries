@@ -1,0 +1,56 @@
+{
+    "repository": "https://github.com/nlohmann/json",
+    "entries": [
+        {
+            "version": "3.11.3",
+            "options": {
+                "disable_enum_serialization": false,
+                "implicit_conversions": true,
+                "multiple_headers": true
+            },
+            "steps": {
+                "order": ["download", "extract", "configure", "build"],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/nlohmann/json/archive/refs/tags/v${version}.zip",
+                    "output": "src.zip",
+                    "hash": "04022b05d806eb5ff73023c280b68697d12b93e1b7267a0b22a1a39ec7578069"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": "."
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "srcDir": "json-${version}",
+                    "buildDir": "build",
+                    "args": [
+                        "-DJSON_BuildTests=OFF",
+                        "-DJSON_CI=OFF",
+                        "-DJSON_GlobalUDLs=OFF",
+                        "-DJSON_Install=ON",
+                        "-DJSON_LegacyDiscardedValueComparison=OFF",
+                        "-DJSON_SystemInclude=OFF",
+                        "-DJSON_DisableEnumSerialization=${options.disable_enum_serialization}",
+                        "-DJSON_ImplicitConversions=${options.implicit_conversions}",
+                        "-DJSON_MultipleHeaders=${options.multiple_headers}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "buildDir": "build"
+                }
+            }
+        },
+        {
+            "version": "3.12.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "34660b5e9a407195d55e8da705ed26cc6d175ce5a6b1fb957e701fb4d5b04022"
+                }
+            }
+        }
+    ]
+}

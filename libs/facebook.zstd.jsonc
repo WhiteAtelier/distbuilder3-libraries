@@ -1,0 +1,113 @@
+{
+    "repository": "https://github.com/facebook/zstd",
+    "entries": [
+        {
+            "version": "1.5.6",
+            "options": {
+                "build_compression": true,
+                "build_decompression": true,
+                "build_program": false,
+                "shared": false,
+                "static": true,
+                "legacy_support": true,
+                "lz4_support": false,
+                "lzma_support": false,
+                "multi_thread_support": true,
+                "programs_link_shared": false,
+                "use_static_runtime": false,
+                "zlib_support": false
+            },
+            "dependencies": {
+                "madler.zlib": {
+                    "version": ["..."],
+                    "condition": {
+                        "op": "and",
+                        "values": [
+                            "${options.zlib_support}",
+                            "${options.build_program}"
+                        ]
+                    }
+                },
+                "lz4.lz4": {
+                    "version": ["..."],
+                    "condition": {
+                        "op": "and",
+                        "values": [
+                            "${options.lz4_support}",
+                            "${options.build_program}"
+                        ]
+                    }
+                }
+            },
+            "steps": {
+                "order": ["download", "extract", "configure", "build"],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/facebook/zstd/archive/refs/tags/v${version}.zip",
+                    "output": "src.zip",
+                    "hash": "3b1c3b46e416d36931efd34663122d7f51b550c87f74de2d38249516fe7d8be5"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": ".",
+                    "error_ok": true
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "srcDir": "zstd-${version}/build/cmake",
+                    "buildDir": "build",
+                    "args": {
+                        "base": [
+                            "-DZSTD_BUILD_DEPRECATED=0",
+                            "-DZSTD_BUILD_TESTS=0",
+                            "-DZSTD_BUILD_COMPRESSION=${options.build_compression}",
+                            "-DZSTD_BUILD_DECOMPRESSION=${options.build_decompression}",
+                            "-DZSTD_BUILD_SHARED=${options.shared}",
+                            "-DZSTD_BUILD_STATIC=${options.static}",
+                            "-DZSTD_LEGACY_SUPPORT=${options.legacy_support}",
+                            "-DZSTD_BUILD_PROGRAMS=${options.build_program}",
+                            "-DZSTD_MULTITHREAD_SUPPORT=${options.multi_thread_support}",
+                            "-DZSTD_PROGRAMS_LINK_SHARED=${options.programs_link_shared}",
+                            "-DZSTD_USE_STATIC_RUNTIME=${options.use_static_runtime}"
+                        ],
+                        "program": {
+                            "condition": "${options.build_program}",
+                            "args": [
+                                "-DZSTD_PROGRAMS_LINK_SHARED=${options.programs_link_shared}",
+                                "-DZSTD_LZ4_SUPPORT=${options.lz4_support}",
+                                "-DZSTD_LZMA_SUPPORT=${options.lzma_support}",
+                                "-DZSTD_ZLIB_SUPPORT=${options.zlib_support}"
+                            ]
+                        },
+                        "bugfix": [
+                            // https://github.com/facebook/zstd/issues/3999
+                            "-DCMAKE_RC_FLAGS=-Izstd-${version}/lib"
+                        ]
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "buildDir": "build"
+                }
+            }
+        },
+        {
+            "version": "1.5.7",
+            "base": "${previous}",
+            "dependencies": {
+                "lz4.lz4": null // TEMP 消してみる
+            },
+            "steps": {
+                "download": {
+                    "hash": "7897bc5d620580d9b7cd3539c44b59d78f3657d33663fe97a145e07b4ebd69a4"
+                },
+                "configure": {
+                    "args": {
+                        "bugfix": null
+                    }
+                }
+            }
+        }
+    ]
+}

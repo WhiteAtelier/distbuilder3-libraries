@@ -1,0 +1,88 @@
+{
+    "repository": "https://github.com/gabime/spdlog",
+    "entries": [
+        {
+            "version": "v1.15.0",
+            "options": {
+                "build_shared": false,
+                "use_fmt": false,
+                "disable_default_logger": true
+            },
+            "dependencies": {
+                "fmtlib.fmt": {
+                    "version": ["..."],
+                    "condition": {
+                        "op": "is_true",
+                        "value": "${options.use_fmt}"
+                    }
+                }
+            },
+            "steps": {
+                "order": ["download", "extract", "configure", "build"],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/gabime/spdlog/archive/refs/tags/${version}.zip",
+                    "output": "src.zip",
+                    "hash": "076f3b4d452b95433083bcc66d07f79addba2d3fcb2b9177abeb7367d47aefbb"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": "src"
+                }
+            },
+            "configure": {
+                "cmd": "cmake-configure",
+                "srcDir": "src",
+                "buildDir": "build",
+                "args": [
+                    "-DCMAKE_DEBUG_POSTFIX=d",
+                    "-DSPDLOG_BUILD_SHARED=${options.build_shared}",
+                    "-DSPDLOG_BUILD_EXAMPLE=0",
+                    "-DSPDLOG_BUILD_EXAMPLE_HO=0",
+                    "-DSPDLOG_BUILD_PIC=0",
+                    "-DSPDLOG_BUILD_TESTS=0",
+                    "-DSPDLOG_BUILD_TESTS_HO=0",
+                    "-DSPDLOG_BUILD_WARNINGS=0",
+                    "-DSPDLOG_DISABLE_DEFAULT_LOGGER=${options.disable_default_logger}",
+                    "-DSPDLOG_INSTALL=1",
+                    "-DSPDLOG_MSVC_UTF8=1",
+                    "-DSPDLOG_FMT_EXTERNAL_HO=0",
+                    "-DSPDLOG_USE_STD_FORMAT=${options.use_fmt:not}",
+                    "-DSPDLOG_FMT_EXTERNAL=${options.use_fmt}"
+                ]
+            },
+            "build": {
+                "cmd": "cmake-build-install",
+                "buildDir": "build"
+            }
+        },
+        {
+            "version": "v1.15.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "322c144e24abee5d0326ddbe5bbc0e0c39c85ac8c2cb3c90d10290a85428327a"
+                }
+            }
+        },
+        {
+            "version": "v1.16.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "3d25808d2fc4db86621a46855800c99ab5734999b61c4cbf9470edf631555397"
+                }
+            }
+        },
+        {
+            "version": "v1.17.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "b11912a82d149792fef33fabd0503b13d54aeac25c1464755461d4108ea71fc2"
+                }
+            }
+        }
+    ]
+}

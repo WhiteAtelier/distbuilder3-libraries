@@ -1,0 +1,72 @@
+{
+    "repository": "https://github.com/AUTHOR/REPOSITORY", // Replace: Repository URL
+    "entries": [
+        {
+            "version": "X.X.X", // Replace: Version
+            "options": {
+                // Declare options ...
+                "shared": false
+            },
+            "dependencies": {
+                // Declare dependencies ...
+                "foo.bar": {
+                    "version": ["..."],
+                    "condition": {
+                        "op": "isTrue",
+                        "values": ["${options.shared}"]
+                    }
+                }
+            },
+            "steps": {
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/AUTHOR/REPOSITORY/archive/refs/tags/v${version}.zip", // Replace: URL
+                    "output": "src.zip",
+                    "hash": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" // Replace: Hash
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": "."
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "source_dir": "REPOSITORY-${version}", // Replace: Source directory
+                    "build_dir": "build",
+                    "args": [
+                        // Add CMake configuration arguments here
+                        "-DZLIB_BUILD_SHARED=${options.shared}",
+                        "-DZLIB_BUILD_STATIC=${options.static}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "REPOSITORY-${version}/LICENSE", // Replace: License file path
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE" // Replace: License file path
+        },
+        {
+            // New versions
+            "version": "Y.Y.Y", // Replace: Version
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" // Replace: Hash
+                }
+            }
+        }
+    ]
+}

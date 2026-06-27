@@ -1,0 +1,175 @@
+{
+    "repository": "https://github.com/WhiteAtelier/roah-lib",
+    "entries": [
+        {
+            "version": "1.9.0",
+            "options": {
+                "build_roah_assert": true,
+                "build_roah_env": true,
+                "build_roah_logger": true,
+                "build_roah_string": true,
+                "build_roah_config": true,
+                "build_roah_url_parser": true,
+                "build_roah_subprocess": true,
+                "build_roah_logging_web_viewer_app": true,
+                "enable_logger_webv_sink": true
+            },
+            "dependencies": {
+                "gabime.spdlog": {
+                    "version": ["..."],
+                    "condition": {
+                        "op": "or",
+                        "values": [
+                            "${options.build_roah_logger}",
+                            "${options.build_roah_logging_web_viewer_app}"
+                        ]
+                    }
+                },
+                "ToruNiina.toml11": {
+                    "version": ["..."],
+                    "condition": "${options.build_roah_config}"
+                },
+                "machinezone.IXWebSocket": {
+                    "version": ["...", "11.4.6"],
+                    "condition": {
+                        "op": "or",
+                        "values": [
+                            "${options.enable_logger_webv_sink}",
+                            "${options.build_roah_logging_web_viewer_app}"
+                        ]
+                    }
+                },
+                "nlohmann.json": {
+                    "version": ["..."],
+                    "condition": {
+                        "op": "or",
+                        "values": [
+                            "${options.enable_logger_webv_sink}",
+                            "${options.build_roah_logging_web_viewer_app}"
+                        ]
+                    }
+                },
+                "CLIUtils.CLI11": {
+                    "version": ["..."],
+                    "condition": "${options.build_roah_logging_web_viewer_app}"
+                }
+            },
+            "steps": {
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/WhiteAtelier/roah-lib/archive/refs/tags/v${version}.zip",
+                    "output": "src.zip",
+                    "hash": "f613c8e533d30f4ebaaed93903ec50803dd719d0703dcb0516ca62676a9b31c5"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": "."
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "source_dir": "roah-lib-${version}",
+                    "build_dir": "build",
+                    "args": {
+                        "v1.9-": [
+                            "-DBUILD_ROAH_ASSERT=${options.build_roah_assert}",
+                            "-DBUILD_ROAH_ENV=${options.build_roah_env}",
+                            "-DBUILD_ROAH_STRING=${options.build_roah_string}",
+                            "-DBUILD_ROAH_SUBPROCESS=${options.build_roah_subprocess}",
+                            "-DBUILD_ROAH_LOGGER=${options.build_roah_logger}",
+                            "-DBUILD_ROAH_CONFIG=${options.build_roah_config}",
+                            "-DBUILD_ROAH_URL_PARSER=${options.build_roah_url_parser}",
+                            "-DBUILD_ROAH_LOGGING_WEB_VIEWER_APP=${options.build_roah_logging_web_viewer_app}"
+                        ]
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "roah-lib-${version}/LICENSE", // Replace: License file path
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE" // Replace: License file path
+        },
+        {
+            "version": "1.9.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "271e2e40eb6b3b7d5c69d279b7825539f25e4ebc355ac165824330126b221074"
+                }
+            }
+        },
+        {
+            "version": "1.9.2",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "34c91f80f30c54589b78ef7e070bc7cd74cef3f9f83512b2bdd75385e95ba273"
+                }
+            }
+        },
+        {
+            "version": "1.10.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "e49731fc5cf0826adbe082796f425df0fe1a8671edb266d0c901bdab57368845"
+                },
+                "configure": {
+                    "args": {
+                        "v1.9-": null,
+                        "v1.10+": [
+                            "-DLIBROAH_BUILD_ASSERT=${options.build_roah_assert}",
+                            "-DLIBROAH_BUILD_ENV=${options.build_roah_env}",
+                            "-DLIBROAH_BUILD_STRING=${options.build_roah_string}",
+                            "-DLIBROAH_BUILD_SUBPROCESS=${options.build_roah_subprocess}",
+                            "-DLIBROAH_BUILD_LOGGER=${options.build_roah_logger}",
+                            "-DLIBROAH_BUILD_CONFIG=${options.build_roah_config}",
+                            "-DLIBROAH_BUILD_URL_PARSER=${options.build_roah_url_parser}",
+                            "-DLIBROAH_BUILD_LOGGER_WEB_VIEWER_APP=${options.build_roah_logging_web_viewer_app}",
+                            "-DLIBROAH_ENABLE_LOGGER_WEBV_SINK=${options.enable_logger_webv_sink}",
+                            "-DLIBROAH_BUILD_TESTS=OFF",
+                            "-DLIBROAH_BUILD_DOCS=OFF"
+                        ],
+                        "v1.10.0": ["-DLIBROAH_INSTALL=ON"]
+                    }
+                }
+            }
+        },
+        {
+            "version": "1.10.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "c4489b8e6343d6b0b0e17559583b39933b2e479356d8df2e09142336dadbcb6d"
+                },
+                "configure": {
+                    "args": {
+                        "v1.10.0": null
+                    }
+                }
+            }
+        },
+        {
+            "version": "1.10.2",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "b289215f955029db56451f0ea0ae7e2ff6755786c2340b1354c8901531d36df1"
+                }
+            }
+        }
+    ]
+}

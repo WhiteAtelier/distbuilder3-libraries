@@ -22,8 +22,8 @@
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "srcDir": "zlib-${version}",
-                    "buildDir": "build",
+                    "source_dir": "zlib-${version}",
+                    "build_dir": "build",
                     "args": [
                         "-DZLIB_BUILD_TESTING=OFF",
                         "-DZLIB_INSTALL=ON",
@@ -33,9 +33,10 @@
                 },
                 "build": {
                     "cmd": "cmake-install-all", // Debug [build,install], Release [build,install]
-                    "buildDir": "build"
+                    "build_dir": "build"
                 }
-            }
+            },
+            "license": "share/doc/zlib/zlib/LICENSE"
         },
         {
             "version": "1.3.2",

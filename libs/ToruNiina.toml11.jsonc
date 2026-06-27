@@ -1,0 +1,57 @@
+{
+    "repository": "https://github.com/ToruNiina/toml11",
+    "entries": [
+        {
+            "version": "4.4.0",
+            "options": {
+                "precompile": true,
+                "enable_access_check": false
+            },
+            "steps": {
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/ToruNiina/toml11/archive/refs/tags/v${version}.zip",
+                    "output": "src.zip",
+                    "hash": "075dd130a9f517c3eaed502ece6a2c1088b1d0dd4aa79882fd0ca7609325ffdc"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": "."
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "source_dir": "toml11-${version}",
+                    "build_dir": "build",
+                    "args": [
+                        "-DTOML11_PRECOMPILE=${options.precompile}",
+                        "-DTOML11_ENABLE_ACCESS_CHECK=${options.enable_access_check}",
+                        "-DTOML11_INSTALL=ON",
+                        "-DTOML11_BUILD_EXAMPLES=OFF",
+                        "-DTOML11_BUILD_TESTS=OFF",
+                        "-DTOML11_BUILD_TOML_TESTS=OFF",
+                        "-DTOML11_TEST_WITH_ASAN=OFF",
+                        "-DTOML11_TEST_WITH_UBSAN=OFF"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "toml11-${version}/LICENSE", // Replace: License file path
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE" // Replace: License file path
+        }
+    ]
+}

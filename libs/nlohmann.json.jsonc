@@ -9,7 +9,13 @@
                 "multiple_headers": true
             },
             "steps": {
-                "order": ["download", "extract", "configure", "build"],
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
                 "download": {
                     "cmd": "download",
                     "url": "https://github.com/nlohmann/json/archive/refs/tags/v${version}.zip",
@@ -23,8 +29,8 @@
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "srcDir": "json-${version}",
-                    "buildDir": "build",
+                    "source_dir": "json-${version}",
+                    "build_dir": "build",
                     "args": [
                         "-DJSON_BuildTests=OFF",
                         "-DJSON_CI=OFF",
@@ -39,9 +45,15 @@
                 },
                 "build": {
                     "cmd": "cmake-install-all",
-                    "buildDir": "build"
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "json-${version}/LICENSE.MIT",
+                    "destination_dir": "."
                 }
-            }
+            },
+            "license": "LICENSE.MIT"
         },
         {
             "version": "3.12.0",

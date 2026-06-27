@@ -40,7 +40,13 @@
                 }
             },
             "steps": {
-                "order": ["download", "extract", "configure", "build"],
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
                 "download": {
                     "cmd": "download",
                     "url": "https://github.com/facebook/zstd/archive/refs/tags/v${version}.zip",
@@ -55,8 +61,8 @@
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "srcDir": "zstd-${version}/build/cmake",
-                    "buildDir": "build",
+                    "source_dir": "zstd-${version}/build/cmake",
+                    "build_dir": "build",
                     "args": {
                         "base": [
                             "-DZSTD_BUILD_DEPRECATED=0",
@@ -88,9 +94,15 @@
                 },
                 "build": {
                     "cmd": "cmake-install-all",
-                    "buildDir": "build"
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "zstd-${version}/LICENSE",
+                    "destination_dir": "."
                 }
-            }
+            },
+            "license": "LICENSE"
         },
         {
             "version": "1.5.7",

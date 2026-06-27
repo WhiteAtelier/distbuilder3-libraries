@@ -9,7 +9,13 @@
                 "single_file": false
             },
             "steps": {
-                "order": ["download", "extract", "configure", "build"],
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
                 "download": {
                     "cmd": "download",
                     "url": "https://github.com/CLIUtils/CLI11/archive/refs/tags/v${version}.zip",
@@ -23,8 +29,8 @@
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "srcDir": "CLI11-${version}",
-                    "buildDir": "build",
+                    "source_dir": "CLI11-${version}",
+                    "build_dir": "build",
                     "args": [
                         "-DCLI11_BUILD_DOCS=OFF",
                         "-DCLI11_BUILD_TESTS=OFF",
@@ -36,9 +42,15 @@
                 },
                 "build": {
                     "cmd": "cmake-install-all", // Debug [build,install], Release [build,install]
-                    "buildDir": "build"
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "CLI11-${version}/LICENSE",
+                    "destination_dir": "."
                 }
-            }
+            },
+            "license": "LICENSE"
         },
         {
             "version": "2.6.2",

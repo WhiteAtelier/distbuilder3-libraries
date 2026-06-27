@@ -1,0 +1,92 @@
+{
+    "repository": "https://github.com/fmtlib/fmt",
+    "entries": [
+        {
+            "version": "11.1.4",
+            "steps": {
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/fmtlib/fmt/archive/refs/tags/${version}.zip",
+                    "output": "src.zip",
+                    "hash": "7e85cbf6125a76daa0f83cd9240eff863d988aca68cd5f66c01ff7b59fa886b6"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": "."
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "source_dir": "fmt-${version}",
+                    "build_dir": "build",
+                    "args": [
+                        "-DFMT_DOC=OFF",
+                        "-DFMT_INSTALL=ON",
+                        "-DFMT_TEST=OFF",
+                        "-DFMT_FUZZ=OFF",
+                        "-DFMT_CUDA_TEST=OFF",
+                        "-DFMT_OS=ON",
+                        "-DFMT_MODULE=OFF",
+                        "-DFMT_SYSTEM_HEADERS=OFF",
+                        "-DFMT_UNICODE=ON",
+                        "-DFMT_PEDANTIC=OFF",
+                        "-DFMT_WERROR=OFF"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "fmt-${version}/LICENSE",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE"
+        },
+        {
+            "version": "11.2.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "ebb31f63e14048ffba9200bbe27b339ec50226cbe8e96ca8b62ee16a0a4fb1af"
+                }
+            }
+        },
+        {
+            "version": "12.0.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "ae441df73376055c796ad54a265b6cd23b9bfe79b614e9663436562faae52466"
+                }
+            }
+        },
+        {
+            "version": "12.1.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "e6a2b43c6ec4779fb53b15b705f7c20b4eb9d5ae35784d610ac6daec30737019"
+                }
+            }
+        },
+        {
+            "version": "12.2.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "8bc0dfbeccc1ba96dc9c0f9bf0bbc95f3c7a35308122618638c5755f389e5e72"
+                }
+            }
+        }
+    ]
+}

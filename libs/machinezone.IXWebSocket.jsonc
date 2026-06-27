@@ -1,0 +1,80 @@
+{
+    "repository": "https://github.com/machinezone/IXWebSocket",
+    "entries": [
+        {
+            "version": "11.4.6",
+            "options": {
+                "shared": false,
+                "use_zlib": false,
+                "use_tls": false
+            },
+            "dependencies": {
+                "madler.zlib": {
+                    "version": ["..."],
+                    "condition": "${options.use_zlib}"
+                }
+            },
+            "steps": {
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/machinezone/IXWebSocket/archive/refs/tags/v${version}.zip",
+                    "output": "src.zip",
+                    "hash": "99f9288e0f742ad08bc60d99abeef6169a3bf137f9c1ef1cca5d39ffbbe9d44b"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.zip",
+                    "output": ".",
+                    "error_ok": true // Symbolic link error
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "source_dir": "IXWebSocket-${version}",
+                    "build_dir": "build",
+                    "args": [
+                        "-DBUILD_DEMO=OFF",
+                        "-DBUILD_SHARED_LIBS=${options.shared}",
+                        "-DUSE_TLS=${options.use_tls}",
+                        "-DUSE_ZLIB=${options.use_zlib}",
+                        "-DIXWEBSOCKET_INSTALL=ON"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "IXWebSocket-${version}/LICENSE.txt",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.txt"
+        },
+        {
+            "version": "12.0.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "4fb299d0a4ab2a124855ef1f2e434c34676258ad4d589a33860485b2a6f37519"
+                }
+            }
+        },
+        {
+            "version": "12.0.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "ecd6ecc6dbf248a741d2a2a9f3abdb77cfe164d7dfe575b3013dd61c9cbf0b73"
+                }
+            }
+        }
+    ]
+}

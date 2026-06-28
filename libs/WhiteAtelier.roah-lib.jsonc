@@ -55,28 +55,14 @@
                 }
             },
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/WhiteAtelier/roah-lib/archive/refs/tags/v${version}.zip",
-                    "output": "src.zip",
-                    "hash": "f613c8e533d30f4ebaaed93903ec50803dd719d0703dcb0516ca62676a9b31c5"
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": "."
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "cbf416382975e4f03386b0ffe1162c053d3bc0cafa6e532ed7ebd61017f96a5f"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "roah-lib-${version}",
-                    "build_dir": "build",
                     "args": {
                         "v1.9-": [
                             "-DBUILD_ROAH_ASSERT=${options.build_roah_assert}",
@@ -96,18 +82,18 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "roah-lib-${version}/LICENSE", // Replace: License file path
+                    "source_file": "src/LICENSE",
                     "destination_dir": "."
                 }
             },
-            "license": "LICENSE" // Replace: License file path
+            "license": "LICENSE"
         },
         {
             "version": "1.9.1",
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "271e2e40eb6b3b7d5c69d279b7825539f25e4ebc355ac165824330126b221074"
+                    "hash": "cea43b06e26cac353c95214e01ac1424208d20e67a5a8162e7521944ba8cc0b0"
                 }
             }
         },
@@ -116,7 +102,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "34c91f80f30c54589b78ef7e070bc7cd74cef3f9f83512b2bdd75385e95ba273"
+                    "hash": "147f68842e90fe769edcd71b6c849824191e9139e71f13f26d4c054829e66985"
                 }
             }
         },
@@ -125,7 +111,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "e49731fc5cf0826adbe082796f425df0fe1a8671edb266d0c901bdab57368845"
+                    "hash": "8fca6cb62d0d07090f6c6deb1dccece5140e4e38790b72d2837923680ddf1fb4"
                 },
                 "configure": {
                     "args": {
@@ -153,7 +139,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "c4489b8e6343d6b0b0e17559583b39933b2e479356d8df2e09142336dadbcb6d"
+                    "hash": "b6a2fe17b9ef0bb7d8061aa87e19550cd8b547807fbe7203369b4364edd04f89"
                 },
                 "configure": {
                     "args": {
@@ -167,7 +153,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "b289215f955029db56451f0ea0ae7e2ff6755786c2340b1354c8901531d36df1"
+                    "hash": "bb9f24bfcc6f704daaf3a35329dbd612778fb791e081ddc36816614b48f26284"
                 }
             }
         }

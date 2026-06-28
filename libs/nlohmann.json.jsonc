@@ -9,28 +9,14 @@
                 "multiple_headers": true
             },
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/nlohmann/json/archive/refs/tags/v${version}.zip",
-                    "output": "src.zip",
-                    "hash": "04022b05d806eb5ff73023c280b68697d12b93e1b7267a0b22a1a39ec7578069"
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": "."
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "d584fd30d13932ba5310537576c8966836fef3b4cfddf8d247b27924a54cc085"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "json-${version}",
-                    "build_dir": "build",
                     "args": [
                         "-DJSON_BuildTests=OFF",
                         "-DJSON_CI=OFF",
@@ -49,7 +35,7 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "json-${version}/LICENSE.MIT",
+                    "source_file": "src/LICENSE.MIT",
                     "destination_dir": "."
                 }
             },
@@ -60,7 +46,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "34660b5e9a407195d55e8da705ed26cc6d175ce5a6b1fb957e701fb4d5b04022"
+                    "hash": "b11254ca252473082e6afb65af092c561b97e258df8766001ace2cba3a4aacfb"
                 }
             }
         }

@@ -8,28 +8,14 @@
                 "enable_access_check": false
             },
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/ToruNiina/toml11/archive/refs/tags/v${version}.zip",
-                    "output": "src.zip",
-                    "hash": "075dd130a9f517c3eaed502ece6a2c1088b1d0dd4aa79882fd0ca7609325ffdc"
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": "."
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "56200ba88f14907c1086547ce92c01511b4c67ea0de798c4a35b49a2e8d8474e"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "toml11-${version}",
-                    "build_dir": "build",
                     "args": [
                         "-DTOML11_PRECOMPILE=${options.precompile}",
                         "-DTOML11_ENABLE_ACCESS_CHECK=${options.enable_access_check}",
@@ -47,7 +33,7 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "toml11-${version}/LICENSE", // Replace: License file path
+                    "source_file": "src/LICENSE", // Replace: License file path
                     "destination_dir": "."
                 }
             },

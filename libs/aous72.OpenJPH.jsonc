@@ -1,0 +1,61 @@
+{
+    "repository": "https://github.com/aous72/OpenJPH",
+    "entries": [
+        {
+            "version": "0.26.3", // 最新 2026/06/29
+            "options": {
+                "shared": false,
+                "support_tiff": false,
+                "disable_simd": false,
+                "disable_sse": false,
+                "disable_sse2": false,
+                "disable_ssse3": false,
+                "disable_sse4": false,
+                "disable_avx": false,
+                "disable_avx2": false,
+                "disable_avx512": false,
+                "disable_neon": false
+            },
+            "dependencies": {
+                // TODO: Tiff (when support_tiff is true)
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "${version}",
+                    "hash": "8db8b89f0f0e637151e80969cd62668bcda6c0754b92c36d8d726e06c5927ca8"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DBUILD_SHARED_LIBS=${options.shared}",
+                        "-DOJPH_ENABLE_TIFF_SUPPORT=${options.support_tiff}",
+                        "-DOJPH_BUILD_TESTS=OFF",
+                        "-DOJPH_BUILD_EXECUTABLES=OFF",
+                        "-DOJPH_BUILD_STREAM_EXPAND=OFF",
+                        "-DOJPH_DISABLE_SIMD=${options.disable_simd}",
+                        "-DOJPH_DISABLE_SSE=${options.disable_sse}",
+                        "-DOJPH_DISABLE_SSE2=${options.disable_sse2}",
+                        "-DOJPH_DISABLE_SSSE3=${options.disable_ssse3}",
+                        "-DOJPH_DISABLE_SSE4=${options.disable_sse4}",
+                        "-DOJPH_DISABLE_AVX=${options.disable_avx}",
+                        "-DOJPH_DISABLE_AVX2=${options.disable_avx2}",
+                        "-DOJPH_DISABLE_AVX512=${options.disable_avx512}",
+                        "-DOJPH_DISABLE_NEON=${options.disable_neon}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE"
+        }
+    ]
+}

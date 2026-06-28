@@ -1,0 +1,80 @@
+{
+    "repository": "https://github.com/ebiggers/libdeflate",
+    "entries": [
+        {
+            "version": "1.18",
+            "options": {
+                "shared": false,
+                "static": true,
+                "compression_support": true,
+                "decompression_support": true,
+                "build_gzip": false,
+                "gzip_support": false,
+                "zlib_support": false,
+                "freestanding": false,
+                "use_shared_lib": false
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "a6f92350bdc0275888b45da37153aa7da6859f50406cbb0001bea0b7c6bb886a"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DCMAKE_INSTALL_PREFIX=${options.install_dir}",
+                        "-DLIBDEFLATE_BUILD_GZIP=${options.build_gzip}",
+                        "-DLIBDEFLATE_BUILD_SHARED_LIB=${options.shared}",
+                        "-DLIBDEFLATE_BUILD_STATIC_LIB=${options.static}",
+                        "-DLIBDEFLATE_BUILD_TESTS=OFF",
+                        "-DLIBDEFLATE_COMPRESSION_SUPPORT=${options.compression_support}",
+                        "-DLIBDEFLATE_DECOMPRESSION_SUPPORT=${options.decompression_support}",
+                        "-DLIBDEFLATE_GZIP_SUPPORT=${options.gzip_support}",
+                        "-DLIBDEFLATE_ZLIB_SUPPORT=${options.zlib_support}",
+                        "-DLIBDEFLATE_FREESTANDING=${options.freestanding}",
+                        "-DLIBDEFLATE_USE_SHARED_LIB=${options.use_shared_lib}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/COPYING",
+                    "destination_dir": "."
+                }
+            },
+            "license": "COPYING"
+        },
+        {
+            "version": "1.23",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "d7715585a7e56341cf059da4afd6c274b96af50dd619d2be51e5dbe0f46a04a1"
+                }
+            }
+        },
+        {
+            "version": "1.24",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "63116b23d8b390bd6273e48601945fd8b2b78ac25871cb1dd812b9e83737d712"
+                }
+            }
+        },
+        {
+            "version": "1.25",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "d85139373397044b74b7257ab19e4b862492fae99af2484a5cc986c7695f203b"
+                }
+            }
+        }
+    ]
+}

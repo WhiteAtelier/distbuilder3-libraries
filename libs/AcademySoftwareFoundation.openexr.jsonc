@@ -1,0 +1,100 @@
+{
+    "repository": "https://github.com/AcademySoftwareFoundation/openexr",
+    "entries": [
+        {
+            "version": "3.2.10", // 3.2 の最新 2026/06/29
+            "options": {
+                "shared": false,
+                "install_pkg_config": false,
+                "enable_threading": true,
+                "use_default_visibility": false,
+                "enable_large_stack": false,
+                "use_internal_libdeflate": false,
+                "use_internal_imath": false
+            },
+            "dependencies": {
+                "ebiggers.libdeflate": {
+                    "condition": "${options.use_internal_libdeflate:not}",
+                    "options": {
+                        "zlib_support": true
+                    }
+                },
+                "AcademySoftwareFoundation.Imath": {
+                    "version": ["3.1.12"], // 3.1
+                    "condition": "${options.use_internal_imath:not}"
+                }
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "93e58379c12d1b533977c3112b9ea5c652eccea9b2c8eebd84a324162f922a5e"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DBUILD_SHARED_LIBS=${options.shared}",
+                        "-DOPENEXR_INSTALL=ON",
+                        "-DOPENEXR_INSTALL_TOOLS=OFF",
+                        "-DOPENEXR_INSTALL_DOCS=OFF",
+                        "-DBUILD_WEBSITE=OFF",
+                        "-DOPENEXR_INSTALL_PKG_CONFIG=${options.install_pkg_config}",
+                        "-DOPENEXR_ENABLE_THREADING=${options.enable_threading}",
+                        "-DOPENEXR_USE_DEFAULT_VISIBILITY=${options.use_default_visibility}",
+                        "-DOPENEXR_ENABLE_LARGE_STACK=${options.enable_large_stack}",
+                        "-DOPENEXR_BUILD_LIBS=ON",
+                        "-DOPENEXR_BUILD_TOOLS=OFF",
+                        "-DOPENEXR_BUILD_EXAMPLES=OFF",
+                        "-DOPENEXR_BUILD_PYTHON=OFF",
+                        "-DOPENEXR_TEST_LIBRARIES=OFF",
+                        "-DOPENEXR_TEST_TOOLS=OFF",
+                        "-DOPENEXR_TEST_PYTHON=OFF",
+                        "-DOPENEXR_USE_CLANG_TIDY=OFF",
+                        "-DOPENEXR_FORCE_INTERNAL_DEFLATE=${options.use_internal_libdeflate}",
+                        "-DOPENEXR_FORCE_INTERNAL_IMATH=${options.use_internal_imath}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.md",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.md"
+        },
+        {
+            "version": "3.3.12", // 3.3 の最新 2026/06/29
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "44cecbfe4aa28db83e07fe349c432b3913c15d19c9dd0b8f123cd0218d92fc36",
+                    "error_ok": true
+                }
+            }
+        },
+        {
+            "version": "3.4.13", // 3.4 の最新 2026/06/29
+            "base": "${previous}",
+            "options": {
+                "use_internal_openjph": false
+            },
+            "dependencies": {
+                "aous72.OpenJPH": {
+                    "version": ["0.26.3", "..."],
+                    "condition": "${options.use_internal_openjph:not}"
+                }
+            },
+            "steps": {
+                "download": {
+                    "hash": "989d22287b63f79dee5a7632a3acb0bf3a175713157f1b985bafb1629466c699",
+                    "error_ok": true
+                }
+            }
+        }
+    ]
+}

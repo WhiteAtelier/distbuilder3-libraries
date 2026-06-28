@@ -10,7 +10,7 @@
                 "order": ["download", "configure", "build", "copy_license"],
                 "download": {
                     "cmd": "github-download",
-                    "ref": "3.3.10",
+                    "ref": "${version}",
                     "hash": "8c9c4a9b108f4f760b583b70720b3bef55a434f93922f05c027398c948d24f02"
                 },
                 "configure": {
@@ -38,16 +38,13 @@
             "license": "LICENSE.md"
         },
         {
-            "version": "3.4.0",
+            "version": "3.4",
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "ref": "3.4",
                     "hash": "13052f569edae351fd67e33bcfbf021136ba0a0f8592878e4b65a8864a39bc0b"
                 }
             }
         }
-        // download の ref はタグを表し, version 文字列とは法則性が異なる
-        // 新しいバージョンの download の ref も適切に変更すること.
     ]
 }

@@ -1,0 +1,86 @@
+{
+    "repository": "https://github.com/abseil/abseil-cpp",
+    "entries": [
+        {
+            "version": "20250127.2",
+            "options": {
+                "shared": "${options.monolithic}",
+                "monolithic": false,
+                "propagate_cxx_std": true
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "${version}",
+                    "hash": "d4f3e35664b0ac2c7b6273e8fb385c2367827b76988fad3f47536db8ef46d45b" // Replace: Hash
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": {
+                        "default": [
+                            "-DBUILD_TESTING=OFF",
+                            "-DABSL_BUILD_TESTING=OFF",
+                            "-DABSL_BUILD_TEST_HELPERS=OFF",
+                            "-DABSL_USE_EXTERNAL_GOOGLETEST=OFF",
+                            "-DABSL_FIND_GOOGLETEST=OFF",
+                            "-DABSL_USE_GOOGLETEST_HEAD=OFF",
+                            "-DABSL_ENABLE_INSTALL=ON",
+                            "-DABSL_MSVC_STATIC_RUNTIME=OFF",
+                            "-DABSL_USE_SYSTEM_INCLUDES=OFF",
+                            "-DABSL_PROPAGATE_CXX_STD=${options.propagate_cxx_std}",
+                            "-DBUILD_SHARED_LIBS=${options.shared}",
+                            "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=${options.monolithic}"
+                        ]
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE", // Replace: License file path
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE" // Replace: License file name
+        },
+        {
+            "version": "20250512.2",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "138c26c9df94906f470f22cc68bfbcc6327828653237bd1b72eae565bcd157a3"
+                }
+            }
+        },
+        {
+            "version": "20250814.2",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "0e9e88e70cf41053fb7ede86201bb3bf7647c8fa39a27661ec0d22811f7150fd"
+                }
+            }
+        },
+        {
+            "version": "20260107.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "8496d5c154a6b1ac90906f5855d0700924a24583965f5b34051e22bcecbe55ce"
+                }
+            }
+        },
+        {
+            "version": "20260526.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "d9defe2403f65d71c7a50d3cda206f5f8eddad81c8529ee734c3031346766b93"
+                }
+            }
+        }
+    ]
+}

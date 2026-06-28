@@ -1,0 +1,85 @@
+{
+    "repository": "https://github.com/protocolbuffers/protobuf",
+    "entries": [
+        {
+            "version": "33.6",
+            "options": {
+                "shared": false,
+                "with_zlib": true,
+                "use_static_zlib": true,
+                "disable_rtti": false
+            },
+            "dependencies": {
+                "abseil.abseil-cpp": {},
+                "madler.zlib": {
+                    "condition": "${options.with_zlib}",
+                    "options": {
+                        "shared": "${options.use_static_zlib:not}",
+                        "static": "${options.use_static_zlib}"
+                    }
+                }
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "ecbc3857b5d254777ed4c3344f09b24e5a0334b643552d503870c12a67a5ff58"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-Dprotobuf_ALLOW_CCACHE=OFF",
+                        "-Dprotobuf_BUILD_CONFORMANCE=OFF",
+                        "-Dprotobuf_BUILD_EXAMPLES=OFF",
+                        "-Dprotobuf_BUILD_LIBPROTOC=ON",
+                        "-Dprotobuf_BUILD_LIBUPB=ON",
+                        "-Dprotobuf_BUILD_PROTOBUF_BINARIES=ON",
+                        "-Dprotobuf_BUILD_PROTOC_BINARIES=ON",
+                        "-Dprotobuf_BUILD_SHARED_LIBS=${options.shared}",
+                        "-Dprotobuf_BUILD_TESTS=OFF",
+                        "-Dprotobuf_DISABLE_RTTI=${options.disable_rtti}",
+                        "-Dprotobuf_INSTALL=ON",
+                        "-Dprotobuf_MSVC_STATIC_RUNTIME=OFF",
+                        "-Dprotobuf_TEST_XML_OUTDIR=OFF",
+                        "-Dprotobuf_USE_UNITY_BUILD=OFF",
+                        // utf8 は抱え込みで...
+                        "-Dutf8_range_ENABLE_INSTALL=ON",
+                        "-Dutf8_range_ENABLE_TESTS=OFF",
+                        "-Dprotobuf_WITH_ZLIB=${options.with_zlib}",
+                        "-Dprotobuf_FORCE_FETCH_DEPENDENCIES=OFF",
+                        "-Dprotobuf_LOCAL_DEPENDENCIES_ONLY=ON"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE", // Replace: License file path
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE" // Replace: License file name
+        },
+        {
+            "version": "34.2",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "77893248377a1f9dbde5307e07b6024fb1e5c5dce95ca43119224dabda0c7eaf"
+                }
+            }
+        },
+        {
+            "version": "35.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "a2b3e789cabddecb9fe80580e69b959c43f03f1f47aceb0017b1b66b7356878c"
+                }
+            }
+        }
+    ]
+}

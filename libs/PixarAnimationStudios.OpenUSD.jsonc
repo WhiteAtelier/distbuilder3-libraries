@@ -1,0 +1,118 @@
+{
+    "repository": "https://github.com/PixarAnimationStudios/OpenUSD",
+    "entries": [
+        {
+            "version": "26.05",
+            "options": {
+                "shared": true,
+                "monolithic": false,
+                "build_imaging": true,
+                "build_usd_imaging": true,
+                "enable_materialx": false,
+                "enable_vulkan": false,
+                "safety_first": false,
+                "use_compiler_cache": "${is_windows:not}"
+            },
+            "dependencies": {
+                "uxlfoundation.oneTBB": {
+                    "version": ["2021.12.0"],
+                    "options": {
+                        "shared": true
+                    }
+                },
+                "AcademySoftwareFoundation.MaterialX": {
+                    "version": ["1.39.4"],
+                    "options": {
+                        "shared": true
+                    },
+                    "condition": "${options.enable_materialx}"
+                },
+                "PixarAnimationStudios.OpenSubdiv": {
+                    "version": ["3.6.1"],
+                    "options": {
+                        "shared": true,
+                        "patch_shader_source_glsl": true
+                    },
+                    "condition": "${options.build_imaging}"
+                }
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "27d8993ea85209a28e57be035d8fda485bc18091ef0e89d96d536fb1f3532240" // Replace: Hash
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "build_dir": "build",
+                    "args": {
+                        "default": [
+                            "-DCMAKE_INSTALL_PREFIX=${install_dir}",
+                            "-DPXR_PREFER_SAFETY_OVER_SPEED=${options.safety_first}",
+                            "-DPXR_ENABLE_COMPILER_CACHE=${options.use_compiler_cache}",
+                            "-DPXR_FIND_TBB_IN_CONFIG=ON", // oneTBB
+                            "-DPXR_ENABLE_PYTHON_SUPPORT=OFF",
+                            "-DBUILD_SHARED_LIBS=${options.shared}",
+                            // "-DTBB_USE_DEBUG_BUILD=OFF", // Release
+                            "-DPXR_BUILD_DOCUMENTATION=OFF",
+                            "-DPXR_BUILD_HTML_DOCUMENTATION=OFF",
+                            "-DPXR_BUILD_PYTHON_DOCUMENTATION=OFF",
+                            "-DPXR_BUILD_TESTS=OFF",
+                            "-DPXR_BUILD_EXAMPLES=OFF",
+                            "-DPXR_BUILD_TUTORIALS=OFF",
+                            "-DPXR_BUILD_USD_TOOLS=OFF",
+                            "-DPXR_BUILD_USD_VALIDATION=ON",
+                            "-DPXR_BUILD_IMAGING=${options.build_imaging}",
+                            "-DPXR_BUILD_USD_IMAGING=${options.build_usd_imaging}",
+                            "-DPXR_BUILD_USDVIEW=OFF",
+                            "-DPXR_BUILD_ALEMBIC_PLUGIN=OFF", // TODO?
+                            "-DPXR_BUILD_DRACO_PLUGIN=OFF", // TODO?
+                            "-DPXR_ENABLE_MATERIALX_SUPPORT=${options.enable_materialx}",
+                            "-DPXR_BUILD_MAYAPY_TESTS=OFF",
+                            "-DPXR_BUILD_ANIMX_TESTS=OFF", // TODO?
+                            "-DBoost_NO_SYSTEM_PATHS=ON"
+                        ],
+                        "is_monolithic": {
+                            // Not Shared ビルドの時のみ, monolithic ビルドの有効化を指定する
+                            // -- もっといい書き方ができたらいいんだけど
+                            "condition": "${options.shared:not}",
+                            "args": [
+                                "-DPXR_BUILD_MONOLITHIC=${options.monolithic}"
+                            ]
+                        },
+                        "is_imaging": {
+                            "condition": "${options.build_imaging}",
+                            "args": [
+                                "-DPXR_ENABLE_PTEX_SUPPORT=OFF", // TODO?
+                                "-DPXR_ENABLE_OPENVDB_SUPPORT=OFF", // TODO?
+                                "-DPXR_BUILD_EMBREE_PLUGIN=OFF", // TODO?
+                                "-DPXR_BUILD_PRMAN_PLUGIN=OFF", // TODO?
+                                "-DPXR_BUILD_OPENIMAGEIO_PLUGIN=OFF", // TODO?
+                                "-DPXR_BUILD_OPENCOLORIO_PLUGIN=OFF", // TODO?
+                                "-DPXR_ENABLE_VULKAN_SUPPORT=${options.enable_vulkan}"
+                            ]
+                        },
+                        "for_windows": {
+                            "condition": "${is_windows}",
+                            "args": [
+                                // Increase the precompiled header buffer limit.
+                                "-DCMAKE_CXX_FLAGS=\"/Zm150\""
+                            ]
+                        }
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.txt",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.txt"
+        }
+    ]
+}

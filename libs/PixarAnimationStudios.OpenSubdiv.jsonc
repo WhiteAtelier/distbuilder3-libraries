@@ -1,0 +1,95 @@
+{
+    "repository": "https://github.com/PixarAnimationStudios/OpenSubdiv",
+    "entries": [
+        {
+            "version": "3.5.1", // VFX Reference: CY2023
+            // なぜかビルドできずにいる
+            "options": {
+                "shared": false,
+                "with_openmp": false,
+                "with_cuda": false,
+                "with_opencl": false,
+                "with_directx": false,
+                "with_glew": false,
+                "with_glfw_x11": false,
+                "with_ptex": false,
+                "with_tbb": false,
+                "patch_shader_source_glsl": false,
+                "patch_shader_source_hlsl": false,
+                "patch_shader_source_msl": false
+            },
+            "dependencies": {
+                "madler.zlib": {
+                    "version": ["1.2.13"],
+                    "condition": "${options.with_ptex}"
+                }
+                // TODO: PTex
+                // TODO: OpenCL
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v3_5_1",
+                    "hash": "addb802e1e4f6c8afbc31f621c9015de9cec2cd0af8d2c9e9cde1388a9c4f4aa"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DNO_EXAMPLES=ON",
+                        "-DNO_TUTORIALS=ON",
+                        "-DNO_REGRESSION=ON",
+                        "-DNO_PTEX=${options.with_ptex:not}",
+                        "-DNO_DOC=ON",
+                        "-DNO_OMP=${options.with_openmp:not}",
+                        "-DNO_TBB=${options.with_tbb:not}",
+                        "-DNO_CUDA=${options.with_cuda:not}",
+                        "-DNO_OPENCL=${options.with_opencl:not}",
+                        "-DNO_METAL=${options.with_metal:not}",
+                        "-DNO_DX=${options.with_directx:not}",
+                        "-DNO_TESTS=ON",
+                        "-DNO_TESTS=ON",
+                        "-DNO_GLTESTS=ON",
+                        "-DNO_GLEW=${options.with_glew:not}",
+                        "-DNO_GLFW=OFF", // v3.0 要求されたのでこれはサポートしない
+                        "-DNO_GLFW_X11=${options.with_glfw_x11:not}",
+                        "-DOSD_PATCH_SHADER_SOURCE_GLSL=${options.patch_shader_source_glsl}",
+                        "-DOSD_PATCH_SHADER_SOURCE_HLSL=${options.patch_shader_source_hlsl}",
+                        "-DOSD_PATCH_SHADER_SOURCE_MSL=${options.patch_shader_source_msl}",
+                        "-DBUILD_SHARED_LIBS=${options.shared}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.txt",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.txt"
+        },
+        {
+            "version": "3.6.1", // VFX Reference: CY2024, CY2025
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "ref": "v3_6_1",
+                    "hash": "37fc7cec23820a2c280a7877d1fcc074ca5056b13e7ee257f8203353413a4a90"
+                }
+            }
+        },
+        {
+            "version": "3.7.0", // VFX Reference: CY2026
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "ref": "v3_7_0",
+                    "hash": "db7c177629a55be425afc7adff72bc057c307b43b21be074b69d20149807a08d"
+                }
+            }
+        }
+    ]
+}

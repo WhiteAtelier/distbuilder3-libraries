@@ -19,7 +19,6 @@
             },
             "dependencies": {
                 "madler.zlib": {
-                    "version": ["..."],
                     "condition": {
                         "op": "and",
                         "values": [
@@ -29,7 +28,6 @@
                     }
                 },
                 "lz4.lz4": {
-                    "version": ["..."],
                     "condition": {
                         "op": "and",
                         "values": [
@@ -40,29 +38,16 @@
                 }
             },
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/facebook/zstd/archive/refs/tags/v${version}.zip",
-                    "output": "src.zip",
-                    "hash": "3b1c3b46e416d36931efd34663122d7f51b550c87f74de2d38249516fe7d8be5"
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": ".",
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "b32ee0756c96768b52624ff70f621f816a8cec139bf506ccd4453bd822c76bd1",
                     "error_ok": true
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "zstd-${version}/build/cmake",
-                    "build_dir": "build",
+                    "source_dir": "src/build/cmake",
                     "args": {
                         "base": [
                             "-DZSTD_BUILD_DEPRECATED=0",
@@ -98,7 +83,7 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "zstd-${version}/LICENSE",
+                    "source_file": "src/LICENSE",
                     "destination_dir": "."
                 }
             },
@@ -112,7 +97,7 @@
             },
             "steps": {
                 "download": {
-                    "hash": "7897bc5d620580d9b7cd3539c44b59d78f3657d33663fe97a145e07b4ebd69a4"
+                    "hash": "7a2792f270702154ae13fb4c865ffa48bc1fad4edd6c0afa96ca572b5a651366"
                 },
                 "configure": {
                     "args": {

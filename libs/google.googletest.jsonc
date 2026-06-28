@@ -1,0 +1,74 @@
+{
+    "repository": "https://github.com/google/googletest",
+    "entries": [
+        {
+            "version": "1.16.0",
+            "options": {
+                "shared": false,
+                "build_gmock": false,
+                "use_absl_and_re2": false
+            },
+            "dependencies": {
+                "abseil.abseil-cpp": {
+                    "version": ["..."],
+                    "condition": "${options.use_absl_and_re2}"
+                },
+                "google.re2": {
+                    "version": ["..."],
+                    "condition": "${options.use_absl_and_re2}"
+                }
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "3430d509444a2d0b98bdabd96cb8435553062478263898b84a0d49f1e35fb3d3"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": {
+                        "default": [
+                            "-DBUILD_GMOCK=${options.build_gmock}",
+                            "-DBUILD_SHARED_LIBS=${options.shared}",
+                            "-DGTEST_HAS_ABSL=${options.use_absl_and_re2}",
+                            "-DINSTALL_GTEST=ON"
+                        ],
+                        "gmock": {
+                            "condition": "${options.build_gmock}",
+                            "args": ["-Dgmock_build_tests=OFF"]
+                        },
+                        "gtest:": {
+                            "condition": "${options.build_gmock:not}",
+                            "args": [
+                                "-Dgtest_force_shared_crt=OFF",
+                                "-Dgtest_force_shared_crt=OFF",
+                                "-Dgtest_build_samples=OFF",
+                                "-Dgtest_disable_pthreads=OFF"
+                            ]
+                        }
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE"
+        },
+        {
+            "version": "1.17.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "2d895af6dc3c698d15a2aa62dcf9328a52d6b97fba74d513f561533714da6558"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,73 @@
+{
+    "repository": "https://github.com/AcademySoftwareFoundation/Imath",
+    "entries": [
+        {
+            "version": "3.1.12",
+            "options": {
+                "shared": false
+            },
+            "dependencies": {},
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "411b6162e1ac74cdcd95d4d51eb1005302264a9c4ccb5331992c26fd96e7f438"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DIMATH_INSTALL=ON",
+                        "-DPYTHON=OFF",
+                        "-DPYBIND11=OFF",
+                        "-DBUILD_WEBSITE=OFF",
+                        "-DIMATH_HALF_USE_LOOKUP_TABLE=ON",
+                        "-DIMATH_USE_DEFAULT_VISIBILITY=OFF",
+                        "-DIMATH_ENABLE_LARGE_STACK=OFF",
+                        "-DIMATH_USE_NOEXCEPT=ON",
+                        // "-DIMATH_INSTALL_SYM_LINK=<Follow Default>",
+                        "-DBUILD_SHARED_LIBS=${options.shared}",
+                        "-DIMATH_USE_CLANG_TIDY=OFF"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.md",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.md"
+        },
+        {
+            "version": "3.2.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "732dce4cd0e399f9ac104616ffa8d3aaed07e62b7c32135a4c080d334688f19c"
+                }
+            }
+        },
+        {
+            "version": "3.2.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "9ec77800043c2abeea1697107ae99d561d3f73f270868643943834cf1af86af1"
+                }
+            }
+        },
+        {
+            "version": "3.2.2",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "7d639ab417ca6ee053b95a89d2bdad2a2dedc35a5ce73527a4104fe2749c3b9f"
+                }
+            }
+        }
+    ]
+}

@@ -8,7 +8,7 @@
                 "static": true
             },
             "steps": {
-                "order": ["download", "configure", "build"],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
                     "cmd": "github-download",
                     "ref": "v${version}",
@@ -25,9 +25,14 @@
                 "build": {
                     "cmd": "cmake-install-all",
                     "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE",
+                    "destination_dir": "."
                 }
             },
-            "license": "share/doc/zlib/zlib/LICENSE"
+            "license": "LICENSE"
         },
         // v1.3.1.2 は patch 以下であるはずなのに CMake にデカイ変更が入っているのでサポートしない.
         {

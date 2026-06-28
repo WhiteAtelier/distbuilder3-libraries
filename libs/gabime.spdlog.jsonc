@@ -15,28 +15,14 @@
                 }
             },
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/gabime/spdlog/archive/refs/tags/v${version}.zip",
-                    "output": "src.zip",
-                    "hash": "d91ab0e16964cedb826e65ba1bed5ed4851d15c7b9453609a52056a94068c020"
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": "."
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "9cac8ea1b0d96e50a53a6f848fba835e0b69986d12ac76b2d1c72dbd2884ed74"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "spdlog-${version}", // Replace: Source directory
-                    "build_dir": "build",
                     "args": [
                         "-DSPDLOG_BUILD_EXAMPLE=OFF",
                         "-DSPDLOG_BUILD_EXAMPLE_HO=OFF",
@@ -59,7 +45,7 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "spdlog-${version}/LICENSE",
+                    "source_file": "src/LICENSE",
                     "destination_dir": "."
                 }
             },
@@ -75,7 +61,7 @@
             },
             "steps": {
                 "download": {
-                    "hash": "b74274c32c8be5dba70b7006c1d41b7d3e5ff0dff8390c8b6390c1189424e094"
+                    "hash": "5aa9ede1591f23aab47dcb56978c7744a8c9cc82e803413f62dcd347c9265d3a"
                 }
             }
         },
@@ -89,7 +75,7 @@
             },
             "steps": {
                 "download": {
-                    "hash": "3d25808d2fc4db86621a46855800c99ab5734999b61c4cbf9470edf631555397"
+                    "hash": "69a6a91d97b59a7fc6219282796eea25a7924e5cb05d8d4dc22ea2e6fe9e07ae"
                 }
             }
         },
@@ -103,7 +89,7 @@
             },
             "steps": {
                 "download": {
-                    "hash": "b11912a82d149792fef33fabd0503b13d54aeac25c1464755461d4108ea71fc2"
+                    "hash": "0274e2cb7a103540e6ce8b46c151da7a98964279c5b1b2bc6b8c0149db7d63a3"
                 }
             }
         }

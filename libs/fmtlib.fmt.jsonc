@@ -4,28 +4,14 @@
         {
             "version": "11.1.4",
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/fmtlib/fmt/archive/refs/tags/${version}.zip",
-                    "output": "src.zip",
-                    "hash": "7e85cbf6125a76daa0f83cd9240eff863d988aca68cd5f66c01ff7b59fa886b6"
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": "."
+                    "cmd": "github-download",
+                    "ref": "${version}",
+                    "hash": "cc05fbd5b7aaefbdb2cba8c1732cb3c909ab0b69e4503ebd1f3bb4f36cbdd4c1"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "fmt-${version}",
-                    "build_dir": "build",
                     "args": [
                         "-DFMT_DOC=OFF",
                         "-DFMT_INSTALL=ON",
@@ -46,7 +32,7 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "fmt-${version}/LICENSE",
+                    "source_file": "src/LICENSE",
                     "destination_dir": "."
                 }
             },
@@ -57,7 +43,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "ebb31f63e14048ffba9200bbe27b339ec50226cbe8e96ca8b62ee16a0a4fb1af"
+                    "hash": "3a1b6d04f219ce050d04a6cdd7fb4827bf9bfb3da7e8bfc117743a26c64d2916"
                 }
             }
         },
@@ -66,7 +52,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "ae441df73376055c796ad54a265b6cd23b9bfe79b614e9663436562faae52466"
+                    "hash": "a7e3e53ae171c1ec27e2d2e0e886d7cef1999a07ea573bb595036cfe686fe7a6"
                 }
             }
         },
@@ -75,7 +61,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "e6a2b43c6ec4779fb53b15b705f7c20b4eb9d5ae35784d610ac6daec30737019"
+                    "hash": "2007e996369b101b9f1be4a0ec55a10010df980b5e552f6683b2c451347df6a9"
                 }
             }
         },
@@ -84,7 +70,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "8bc0dfbeccc1ba96dc9c0f9bf0bbc95f3c7a35308122618638c5755f389e5e72"
+                    "hash": "a05430178d208f24e3ccc169b8eef056dca401cd76977cebc0b9a28e332bbd8d"
                 }
             }
         }

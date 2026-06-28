@@ -1,0 +1,64 @@
+{
+    "repository": "https://github.com/uxlfoundation/oneTBB",
+    "entries": [
+        {
+            "version": "2021.12.0",
+            "options": {
+                "shared": false,
+                "use_bundled_tbb": true,
+                "build_tbb": true,
+                "build_tbb_malloc": true,
+                "build_tbb_malloc_proxy": true,
+                "build_as_uwd": false
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "446f366a2a06ab0835bf44a786529f664e2a2eee1d41c2d54f3ef664ddbf849f"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DTBB_TEST=OFF",
+                        "-DTBB_EXAMPLES=OFF",
+                        "-DTBB_STRICT=ON",
+                        "-DTBB_WINDOWS_DRIVER=${options.build_as_uwd}",
+                        "-DTBB_NO_APPCONTAINER=OFF",
+                        "-DTBB4PY_BUILD=OFF",
+                        "-DTBB_BUILD=${options.build_tbb}",
+                        "-DTBBMALLOC_BUILD=${options.build_tbb_malloc}",
+                        "-DTBBMALLOC_PROXY_BUILD=${options.build_tbb_malloc_proxy}",
+                        "-DTBB_CPF=OFF",
+                        "-DTBB_FIND_PACKAGE=${options.use_bundled_tbb:not}", // Enable find_package support
+                        // "-DTBB_DISABLE_HWLOC_AUTOMATIC_SEARCH=<Follow Default>",
+                        "-DTBB_ENABLE_IPO=ON",
+                        "-DTBB_FUZZ_TESTING=OFF",
+                        "-DTBB_INSTALL=ON",
+                        "-DBUILD_SHARED_LIBS=${options.shared}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.txt",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.txt"
+        },
+        {
+            "version": "2021.13.2",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "7b65e08405253f7a51d866ca63a285e34ebe13dba0697eed779313aeb9bf848f"
+                }
+            }
+        }
+    ]
+}

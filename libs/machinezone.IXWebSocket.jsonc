@@ -15,29 +15,15 @@
                 }
             },
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/machinezone/IXWebSocket/archive/refs/tags/v${version}.zip",
-                    "output": "src.zip",
-                    "hash": "99f9288e0f742ad08bc60d99abeef6169a3bf137f9c1ef1cca5d39ffbbe9d44b"
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": ".",
-                    "error_ok": true // Symbolic link error
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "7619aa1271be0c52b316481933e657a54e0b3a1e045fc388164a1198dfca0ed4",
+                    "error_ok": true
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "IXWebSocket-${version}",
-                    "build_dir": "build",
                     "args": [
                         "-DBUILD_DEMO=OFF",
                         "-DBUILD_SHARED_LIBS=${options.shared}",
@@ -52,7 +38,7 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "IXWebSocket-${version}/LICENSE.txt",
+                    "source_file": "src/LICENSE.txt",
                     "destination_dir": "."
                 }
             },
@@ -63,7 +49,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "4fb299d0a4ab2a124855ef1f2e434c34676258ad4d589a33860485b2a6f37519"
+                    "hash": "0d7edb28b9d617e8592bd813bd4ad9d8ef6607709849c9e93d802c42eed453ac"
                 }
             }
         },
@@ -72,7 +58,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "ecd6ecc6dbf248a741d2a2a9f3abdb77cfe164d7dfe575b3013dd61c9cbf0b73"
+                    "hash": "9888fb27589af157fe22af285848db2a5555628b312089c0228a530872e7b876"
                 }
             }
         }

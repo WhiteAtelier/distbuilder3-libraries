@@ -1,0 +1,53 @@
+{
+    "repository": "https://github.com/glfw/glfw",
+    "entries": [
+        {
+            "version": "3.3.10",
+            "options": {
+                "shared": false
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "3.3.10",
+                    "hash": "8c9c4a9b108f4f760b583b70720b3bef55a434f93922f05c027398c948d24f02"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DBUILD_SHARED_LIBS=${options.shared}",
+                        "-DUSE_MSVC_RUNTIME_LIBRARY_DLL=OFF",
+                        "-DGLFW_BUILD_DOCS=OFF",
+                        "-DGLFW_BUILD_EXAMPLES=OFF",
+                        "-DGLFW_BUILD_TEST=OFF",
+                        "-DGLFW_INSTALL=ON",
+                        "-DGLFW_BUILD_WIN32=${is_windows}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.md",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.md"
+        },
+        {
+            "version": "3.4.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "ref": "3.4",
+                    "hash": "13052f569edae351fd67e33bcfbf021136ba0a0f8592878e4b65a8864a39bc0b"
+                }
+            }
+        }
+        // download の ref はタグを表し, version 文字列とは法則性が異なる
+        // 新しいバージョンの download の ref も適切に変更すること.
+    ]
+}

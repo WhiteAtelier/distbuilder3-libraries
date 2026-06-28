@@ -1,0 +1,84 @@
+{
+    "repository": "https://github.com/AcademySoftwareFoundation/MaterialX",
+    "entries": [
+        {
+            "version": "1.39.4",
+            "options": {
+                "build_glsl_shader_generator": true,
+                "build_osl_shader_generator": true,
+                "build_mdl_shader_generator": true,
+                "build_msl_shader_generator": true,
+                "build_render": true,
+                "build_render_platforms": true,
+                "with_openimageio": false,
+                "with_opencolorio": false,
+                "shared": false,
+                "monolithic": false,
+                "use_ccache": true
+            },
+            "dependencies": {
+                // TODO: OpenImageIO
+                // TODO: OpenColorIO
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "3cb1eccc8796d5225414b4f0ce1108fd7002f28f1a400f363a8cd5f8c246e8a2"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DMATERIALX_BUILD_JS=OFF",
+                        "-DMATERIALX_BUILD_PYTHON=OFF",
+                        "-DMATERIALX_BUILD_VIEWER=OFF",
+                        "-DMATERIALX_BUILD_GRAPH_EDITOR=OFF",
+                        "-DMATERIALX_BUILD_DOCS=OFF",
+                        "-DMATERIALX_BUILD_GEN_GLSL=${options.build_glsl_shader_generator}",
+                        "-DMATERIALX_BUILD_GEN_OSL=${options.build_osl_shader_generator}",
+                        "-DMATERIALX_BUILD_GEN_MDL=${options.build_mdl_shader_generator}",
+                        "-DMATERIALX_BUILD_GEN_MSL=${options.build_msl_shader_generator}",
+                        "-DMATERIALX_BUILD_RENDER=${options.build_render}",
+                        "-DMATERIALX_BUILD_RENDER_PLATFORMS=${options.build_render_platforms}",
+                        "-DMATERIALX_BUILD_OIIO=${options.with_openimageio}",
+                        "-DMATERIALX_BUILD_OCIO=${options.with_opencolorio}",
+                        "-DMATERIALX_BUILD_TESTS=OFF",
+                        "-DMATERIALX_BUILD_BENCHMARK_TESTS=OFF",
+                        "-DMATERIALX_BUILD_SHARED_LIBS=${options.shared}",
+                        "-DMATERIALX_BUILD_DATA_LIBRARY=OFF",
+                        "-DMATERIALX_BUILD_MONOLITHIC=${options.monolithic}",
+                        "-DMATERIALX_BUILD_USE_CCACHE=${options.use_ccache}",
+                        "-DMATERIALX_PYTHON_LTO=ON", // don't care
+                        "-DMATERIALX_INSTALL_PYTHON=OFF", // don't care
+                        "-DMATERIALX_INSTALL_RESOURCES=ON",
+                        "-DMATERIALX_TEST_RENDER=OFF",
+                        "-DMATERIALX_WARNINGS_AS_ERRORS=OFF",
+                        "-DMATERIALX_COVERAGE_ANALYSIS=OFF",
+                        "-DMATERIALX_DYNAMIC_ANALYSIS=OFF",
+                        "-DMATERIALX_BUILD_IOS=OFF"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE"
+        },
+        {
+            "version": "1.39.5",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "e7f3dc444bab78b50d7e407e2de6d75d51d6a8bff17eafe4f5bad3bd51aa29ed"
+                }
+            }
+        }
+    ]
+}

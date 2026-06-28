@@ -18,28 +18,16 @@
                 }
             },
             "steps": {
-                "order": [
-                    "download",
-                    "extract",
-                    "configure",
-                    "build",
-                    "copy_license"
-                ],
+                "order": ["download", "configure", "build", "copy_license"],
                 "download": {
-                    "cmd": "download",
-                    "url": "https://github.com/AUTHOR/REPOSITORY/archive/refs/tags/v${version}.zip", // Replace: URL
-                    "output": "src.zip",
-                    "hash": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" // Replace: Hash
-                },
-                "extract": {
-                    "cmd": "extract",
-                    "input": "src.zip",
-                    "output": "."
+                    "cmd": "github-download",
+                    "ref": "v${version}", // Replace: Ref
+                    "hash": "0000000000000000000000000000000000000000000000000000000000000000" // Replace: Hash
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "source_dir": "REPOSITORY-${version}", // Replace: Source directory
-                    "build_dir": "build",
+                    // "source_dir": "src",
+                    // "build_dir": "build",
                     "args": [
                         // Add CMake configuration arguments here
                         "-DZLIB_BUILD_SHARED=${options.shared}",
@@ -52,11 +40,11 @@
                 },
                 "copy_license": {
                     "cmd": "install-file",
-                    "source_file": "REPOSITORY-${version}/LICENSE", // Replace: License file path
+                    "source_file": "src/LICENSE", // Replace: License file path
                     "destination_dir": "."
                 }
             },
-            "license": "LICENSE" // Replace: License file path
+            "license": "LICENSE" // Replace: License file name
         },
         {
             // New versions
@@ -64,7 +52,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" // Replace: Hash
+                    "hash": "1111111111111111111111111111111111111111111111111111111111111111" // Replace: Hash
                 }
             }
         }

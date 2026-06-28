@@ -1,0 +1,41 @@
+{
+    "repository": "https://github.com/WhiteAtelier/vkwp",
+    "entries": [
+        {
+            "version": "2.2.1",
+            "options": {
+                "support_glfw_surface": false,
+                "support_win32_surface": false
+            },
+            "dependencies": {
+                "gabime.spdlog": {},
+                "glfw.glfw": {
+                    "condition": "${options.support_glfw_surface}"
+                }
+            },
+            "steps": {
+                "order": ["download", "configure", "build"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "6eb223b13769d4a5d853a8886cc2a33d4906114550378286a9b4efc2387be8a0"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DVKWP_SUPPORT_GLFW_SURFACE=${options.support_glfw_surface}",
+                        "-DVKWP_SUPPORT_WIN32_SURFACE=${options.support_win32_surface}",
+                        "-DVKWP_BUILD_TESTS=OFF",
+                        "-DVKWP_BUILD_DOCS=OFF",
+                        "-DVKWP_INSTALL=ON"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                }
+            },
+            "license": "!NoLicense"
+        }
+    ]
+}

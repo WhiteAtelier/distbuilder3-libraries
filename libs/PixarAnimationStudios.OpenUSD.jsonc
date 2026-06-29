@@ -11,7 +11,8 @@
                 "enable_materialx": false,
                 "enable_vulkan": false,
                 "safety_first": false,
-                "use_compiler_cache": "${is_windows:not}"
+                "use_compiler_cache": "${is_windows:not}",
+                "debug_build": false // Not Multi Config
             },
             "dependencies": {
                 "uxlfoundation.oneTBB": {
@@ -37,7 +38,14 @@
                 }
             },
             "steps": {
-                "order": ["download", "configure", "build", "copy_license"],
+                "order": [
+                    "download",
+                    "configure",
+                    "build",
+                    "configure_debug",
+                    "build_debug",
+                    "copy_license"
+                ],
                 "download": {
                     "cmd": "github-download",
                     "ref": "v${version}",
@@ -45,7 +53,9 @@
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "build_dir": "build",
+                    "condition": "${options.debug_build:not}",
+                    "configs": ["Release"],
+                    "debug_postfix": "",
                     "args": {
                         "default": [
                             "-DCMAKE_INSTALL_PREFIX=${install_dir}",
@@ -54,7 +64,7 @@
                             "-DPXR_FIND_TBB_IN_CONFIG=ON", // oneTBB
                             "-DPXR_ENABLE_PYTHON_SUPPORT=OFF",
                             "-DBUILD_SHARED_LIBS=${options.shared}",
-                            // "-DTBB_USE_DEBUG_BUILD=OFF", // Release
+                            "-DTBB_USE_DEBUG_BUILD=OFF", // Release
                             "-DPXR_BUILD_DOCUMENTATION=OFF",
                             "-DPXR_BUILD_HTML_DOCUMENTATION=OFF",
                             "-DPXR_BUILD_PYTHON_DOCUMENTATION=OFF",
@@ -104,7 +114,76 @@
                 },
                 "build": {
                     "cmd": "cmake-install-all",
-                    "build_dir": "build"
+                    "condition": "${options.debug_build:not}",
+                    "build_dir": "build",
+                    "configs": ["Release"]
+                },
+                "configure_debug": {
+                    "cmd": "cmake-configure",
+                    "condition": "${options.debug_build}",
+                    "configs": ["Debug"],
+                    "debug_postfix": "",
+                    "args": {
+                        "default": [
+                            "-DCMAKE_INSTALL_PREFIX=${install_dir}",
+                            "-DPXR_PREFER_SAFETY_OVER_SPEED=${options.safety_first}",
+                            "-DPXR_ENABLE_COMPILER_CACHE=${options.use_compiler_cache}",
+                            "-DPXR_FIND_TBB_IN_CONFIG=ON", // oneTBB
+                            "-DPXR_ENABLE_PYTHON_SUPPORT=OFF",
+                            "-DBUILD_SHARED_LIBS=${options.shared}",
+                            "-DTBB_USE_DEBUG_BUILD=ON",
+                            "-DPXR_BUILD_DOCUMENTATION=OFF",
+                            "-DPXR_BUILD_HTML_DOCUMENTATION=OFF",
+                            "-DPXR_BUILD_PYTHON_DOCUMENTATION=OFF",
+                            "-DPXR_BUILD_TESTS=OFF",
+                            "-DPXR_BUILD_EXAMPLES=OFF",
+                            "-DPXR_BUILD_TUTORIALS=OFF",
+                            "-DPXR_BUILD_USD_TOOLS=OFF",
+                            "-DPXR_BUILD_USD_VALIDATION=ON",
+                            "-DPXR_BUILD_IMAGING=${options.build_imaging}",
+                            "-DPXR_BUILD_USD_IMAGING=${options.build_usd_imaging}",
+                            "-DPXR_BUILD_USDVIEW=OFF",
+                            "-DPXR_BUILD_ALEMBIC_PLUGIN=OFF", // TODO?
+                            "-DPXR_BUILD_DRACO_PLUGIN=OFF", // TODO?
+                            "-DPXR_ENABLE_MATERIALX_SUPPORT=${options.enable_materialx}",
+                            "-DPXR_BUILD_MAYAPY_TESTS=OFF",
+                            "-DPXR_BUILD_ANIMX_TESTS=OFF", // TODO?
+                            "-DBoost_NO_SYSTEM_PATHS=ON"
+                        ],
+                        "is_monolithic": {
+                            // Not Shared ビルドの時のみ, monolithic ビルドの有効化を指定する
+                            // -- もっといい書き方ができたらいいんだけど
+                            "condition": "${options.shared:not}",
+                            "args": [
+                                "-DPXR_BUILD_MONOLITHIC=${options.monolithic}"
+                            ]
+                        },
+                        "is_imaging": {
+                            "condition": "${options.build_imaging}",
+                            "args": [
+                                "-DPXR_ENABLE_PTEX_SUPPORT=OFF", // TODO?
+                                "-DPXR_ENABLE_OPENVDB_SUPPORT=OFF", // TODO?
+                                "-DPXR_BUILD_EMBREE_PLUGIN=OFF", // TODO?
+                                "-DPXR_BUILD_PRMAN_PLUGIN=OFF", // TODO?
+                                "-DPXR_BUILD_OPENIMAGEIO_PLUGIN=OFF", // TODO?
+                                "-DPXR_BUILD_OPENCOLORIO_PLUGIN=OFF", // TODO?
+                                "-DPXR_ENABLE_VULKAN_SUPPORT=${options.enable_vulkan}"
+                            ]
+                        },
+                        "for_windows": {
+                            "condition": "${is_windows}",
+                            "args": [
+                                // Increase the precompiled header buffer limit.
+                                "-DCMAKE_CXX_FLAGS=\"/Zm150\""
+                            ]
+                        }
+                    }
+                },
+                "build_debug": {
+                    "cmd": "cmake-install-all",
+                    "condition": "${options.debug_build}",
+                    "build_dir": "build",
+                    "configs": ["Debug"]
                 },
                 "copy_license": {
                     "cmd": "install-file",

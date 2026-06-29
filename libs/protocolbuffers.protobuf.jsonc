@@ -7,7 +7,6 @@
                 "shared": false,
                 "with_zlib": true,
                 "use_static_zlib": true,
-                "use_shared_zlib": false,
                 "disable_rtti": false
             },
             "dependencies": {
@@ -15,8 +14,14 @@
                 "madler.zlib": {
                     "condition": "${options.with_zlib}",
                     "options": {
-                        "shared": "${options.use_shared_zlib}",
-                        "static": "${options.use_static_zlib}"
+                        "shared": {
+                            "condition": "${options.use_static_zlib:not}",
+                            "value": true
+                        },
+                        "static": {
+                            "condition": "${options.use_static_zlib}",
+                            "value": true
+                        }
                     }
                 }
             },

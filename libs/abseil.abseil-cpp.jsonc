@@ -4,8 +4,8 @@
         {
             "version": "20250127.2",
             "options": {
-                "shared": "${options.monolithic}",
-                "monolithic": false,
+                "shared": false,
+                "shared_monolithic": false,
                 "propagate_cxx_std": true
             },
             "steps": {
@@ -28,10 +28,22 @@
                             "-DABSL_ENABLE_INSTALL=ON",
                             "-DABSL_MSVC_STATIC_RUNTIME=OFF",
                             "-DABSL_USE_SYSTEM_INCLUDES=OFF",
-                            "-DABSL_PROPAGATE_CXX_STD=${options.propagate_cxx_std}",
-                            "-DBUILD_SHARED_LIBS=${options.shared}",
-                            "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=${options.monolithic}"
-                        ]
+                            "-DABSL_PROPAGATE_CXX_STD=${options.propagate_cxx_std}"
+                        ],
+                        "non-monolithic": {
+                            "condition": "${options.shared_monolithic:not}",
+                            "args": [
+                                "-DBUILD_SHARED_LIBS=${options.shared}",
+                                "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=OFF"
+                            ]
+                        },
+                        "monolithic": {
+                            "condition": "${options.shared_monolithic}",
+                            "args": [
+                                "-DBUILD_SHARED_LIBS=ON",
+                                "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=ON"
+                            ]
+                        }
                     }
                 },
                 "build": {

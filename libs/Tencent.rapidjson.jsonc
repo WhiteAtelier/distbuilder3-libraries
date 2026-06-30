@@ -1,0 +1,83 @@
+{
+    "repository": "https://github.com/Tencent/rapidjson",
+    "entries": [
+        {
+            "version": "1.1.0",
+            "options": {
+                "cxx_standard": "${cxx_standard}"
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "7fb9f29b86f6842a6f67ebdf6b56b3fc25671b3bca50448e1505f47f37eb19d5"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "debug_postfix": "", // Header Only
+                    "configs": ["Release"], // Header Only
+                    "args": {
+                        "default": [
+                            "-DCMAKE_INSTALL_PREFIX=${install_dir}", // 必要
+                            "-DRAPIDJSON_BUILD_DOC=OFF",
+                            "-DRAPIDJSON_BUILD_EXAMPLES=OFF",
+                            "-DRAPIDJSON_BUILD_TESTS=OFF",
+                            "-DRAPIDJSON_BUILD_THIRDPARTY_GTEST=OFF",
+                            "-DRAPIDJSON_BUILD_ASAN=OFF",
+                            "-DRAPIDJSON_BUILD_UBSAN=OFF",
+                            "-DRAPIDJSON_ENABLE_INSTRUMENTATION_OPT=ON"
+                        ],
+                        "cxx_standard_14": {
+                            "condition": {
+                                "op": "equal",
+                                "lhs": "${options.cxx_standard:str}",
+                                "rhs": "11"
+                            },
+                            "args": [
+                                "-DRAPIDJSON_BUILD_CXX11=ON",
+                                "-DRAPIDJSON_BUILD_CXX17=OFF",
+                                "-DRAPIDJSON_BUILD_CXX20=OFF"
+                            ]
+                        },
+                        "cxx_standard_17": {
+                            "condition": {
+                                "op": "equal",
+                                "lhs": "${options.cxx_standard:str}",
+                                "rhs": "14"
+                            },
+                            "args": [
+                                "-DRAPIDJSON_BUILD_CXX11=OFF",
+                                "-DRAPIDJSON_BUILD_CXX17=ON",
+                                "-DRAPIDJSON_BUILD_CXX20=OFF"
+                            ]
+                        },
+                        "cxx_standard_20": {
+                            "condition": {
+                                "op": "equal",
+                                "lhs": "${options.cxx_standard:str}",
+                                "rhs": "20"
+                            },
+                            "args": [
+                                "-DRAPIDJSON_BUILD_CXX11=OFF",
+                                "-DRAPIDJSON_BUILD_CXX17=OFF",
+                                "-DRAPIDJSON_BUILD_CXX20=ON"
+                            ]
+                        }
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build",
+                    "configs": ["Release"] // Header Only
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/license.txt",
+                    "destination_dir": "."
+                }
+            },
+            "license": "license.txt"
+        }
+    ]
+}

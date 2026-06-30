@@ -1,0 +1,45 @@
+{
+    "repository": "https://github.com/wolfSSL/wolfssl",
+    "entries": [
+        {
+            "version": "5.9.2",
+            "options": {
+                "shared": false
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}-stable",
+                    "hash": "7a2dae7fecca436429bab51bfb93081f420283cfa0b014b0bc3330f53938f230"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": {
+                        "default": [
+                            "-DWOLFSSL_INSTALL=ON",
+                            "-DWOLFSSL_32BIT=OFF",
+                            "-DWOLFSSL_16BIT=OFF",
+                            "-DBUILD_SHARED_LIBS=${options.shared}"
+                            // 基本的にデフォルト使う
+                        ],
+                        "msvc": {
+                            "condition": "${is_windows}", // TODO: 厳密には MSVC かどうかの判定が必要
+                            "args": ["-DCMAKE_C_FLAGS=\"/utf-8\""]
+                        }
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSING",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSING"
+        }
+    ]
+}

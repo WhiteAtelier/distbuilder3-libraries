@@ -1,0 +1,80 @@
+{
+    "repository": "https://github.com/yhirose/cpp-httplib",
+    "entries": [
+        {
+            "version": "0.48.0",
+            "options": {
+                "shared": false,
+                "require_openssl": false,
+                "require_wolfssl": true,
+                "require_mbedtls": false,
+                "require_zlib": false,
+                "require_brotli": false,
+                "require_zstd": false,
+                "use_openssl_if_available": "${options.require_openssl}",
+                "use_wolfssl_if_available": true,
+                "use_mbedtls_if_available": "${options.require_mbedtls}",
+                "use_zlib_if_available": "${options.require_zlib}",
+                "use_brotli_if_available": "${options.require_brotli}",
+                "use_zstd_if_available": "${options.require_zstd}"
+            },
+            "dependencies": {
+                // TODO: OpenSSL
+                "wolfSSL.wolfssl": {
+                    "condition": "${options.require_wolfssl}"
+                },
+                // TODO: MbedTLS
+                // TODO: Brotli
+                "madler.zlib": {
+                    "condition": "${options.require_zlib}"
+                },
+                "facebook.zstd": {
+                    "condition": "${options.require_zstd}"
+                }
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "676b068535035c7e0f871b7bbe2f732824a59a629a2dc6d804f024e8b7e6a74e"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DBUILD_SHARED_LIBS=${options.shared}",
+                        "-DHTTPLIB_NO_EXCEPTIONS=OFF",
+                        "-DHTTPLIB_REQUIRE_OPENSSL=${options.require_openssl}",
+                        "-DHTTPLIB_REQUIRE_WOLFSSL=${options.require_wolfssl}",
+                        "-DHTTPLIB_REQUIRE_MBEDTLS=${options.require_mbedtls}",
+                        "-DHTTPLIB_REQUIRE_ZLIB=${options.require_zlib}",
+                        "-DHTTPLIB_USE_OPENSSL_IF_AVAILABLE=${options.use_openssl_if_available}",
+                        "-DHTTPLIB_USE_WOLFSSL_IF_AVAILABLE=${options.use_wolfssl_if_available}",
+                        "-DHTTPLIB_USE_MBEDTLS_IF_AVAILABLE=${options.use_mbedtls_if_available}",
+                        "-DHTTPLIB_USE_ZLIB_IF_AVAILABLE=${options.use_zlib_if_available}",
+                        "-DHTTPLIB_COMPILE=OFF",
+                        "-DHTTPLIB_INSTALL=ON",
+                        "-DHTTPLIB_TEST=OFF",
+                        "-DHTTPLIB_REQUIRE_BROTLI=${options.require_brotli}",
+                        "-DHTTPLIB_USE_BROTLI_IF_AVAILABLE=${options.use_brotli_if_available}",
+                        "-DHTTPLIB_DISABLE_MACOSX_AUTOMATIC_ROOT_CERTIFICATES=OFF",
+                        "-DHTTPLIB_USE_NON_BLOCKING_GETADDRINFO=ON",
+                        "-DHTTPLIB_REQUIRE_ZSTD=${options.require_zstd}",
+                        "-DHTTPLIB_USE_ZSTD_IF_AVAILABLE=${options.use_zstd_if_available}",
+                        "-DHTTPLIB_BUILD_MODULES=OFF"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE"
+        }
+    ]
+}

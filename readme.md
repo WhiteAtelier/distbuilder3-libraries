@@ -31,25 +31,25 @@ PT は Pass Through、変換なしを表します。
 
 ### 展開可能な文字列
 
-`${VARIABLE_NAME}` と記述することで、変数を展開することができます。
+`"${VARIABLE_NAME}"` と記述することで、変数を展開することができます。
 
 変数は、動的に定義されるものもありますが、常に利用可能な変数は、次の通りです。
 
-| Variable                 | Type    | Description                                       |
-| ------------------------ | ------- | ------------------------------------------------- |
-| `${version}`             | string  | Entry 内で、そのエントリーで扱うバージョン文字列  |
-| `${previous}`            | string  | Entry 内で、その直前に定義されたバージョン文字列  |
-| `${author}`              | string  | リポジトリの author 名                            |
-| `${repo}`                | string  | リポジトリの名前                                  |
-| `${repository}`          | string  | リポジトリの名前 (= `${repo}`)                    |
-| `${generator}`           | string  | 使用される CMake のジェネレータ名                 |
-| `${arch}`                | string  | 使用される CMake のアーキテクチャ名               |
-| `${architecture}`        | string  | 使用される CMake のアーキテクチャ名 (= `${arch}`) |
-| `${is_windows}`          | boolean | Windows かどうかのフラグ                          |
-| `${is_macos}`            | boolean | macOS かどうかのフラグ                            |
-| `${is_linux}`            | boolean | Linux かどうかのフラグ                            |
-| `${platform}`            | string  | プラットフォーム名 (`windows`/`macos`/`linux`)    |
-| `${options.OPTION_NAME}` | Any     | Entry 内で定義されたオプションの値                |
+| Variable                 | Type    | Description                                                    |
+| ------------------------ | ------- | -------------------------------------------------------------- |
+| `${version}`             | string  | Entry 内にて、そのエントリーで扱うバージョン文字列             |
+| `${previous}`            | string  | Entry 内にて、その直前のエントリーで定義されたバージョン文字列 |
+| `${author}`              | string  | リポジトリの author 名                                         |
+| `${repo}`                | string  | リポジトリの名前                                               |
+| `${repository}`          | string  | リポジトリの名前 (= `${repo}`)                                 |
+| `${generator}`           | string  | 使用される CMake のジェネレータ名                              |
+| `${arch}`                | string  | 使用される CMake のアーキテクチャ名                            |
+| `${architecture}`        | string  | 使用される CMake のアーキテクチャ名 (= `${arch}`)              |
+| `${is_windows}`          | boolean | Windows かどうかのフラグ                                       |
+| `${is_macos}`            | boolean | macOS かどうかのフラグ                                         |
+| `${is_linux}`            | boolean | Linux かどうかのフラグ                                         |
+| `${platform}`            | string  | プラットフォーム名 (`windows`/`macos`/`linux`)                 |
+| `${options.OPTION_NAME}` | Any     | Entry 内で定義されたオプションの値                             |
 
 また、ビルドステップ内において、追加で利用可能な変数は、次の通りです。
 

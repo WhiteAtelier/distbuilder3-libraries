@@ -4,40 +4,39 @@
         {
             "version": "4.4.0",
             "options": {
-                "precompile": true,
-                "enable_access_check": false
+                "enable_access_check": false,
             },
             "steps": {
                 "order": ["download", "configure", "build", "copy_license"],
                 "download": {
                     "cmd": "github-download",
                     "ref": "v${version}",
-                    "hash": "56200ba88f14907c1086547ce92c01511b4c67ea0de798c4a35b49a2e8d8474e"
+                    "hash": "56200ba88f14907c1086547ce92c01511b4c67ea0de798c4a35b49a2e8d8474e",
                 },
                 "configure": {
                     "cmd": "cmake-configure",
                     "args": [
-                        "-DTOML11_PRECOMPILE=${options.precompile}",
+                        "-DTOML11_PRECOMPILE=OFF", // On にするといろいろ面倒だった
                         "-DTOML11_ENABLE_ACCESS_CHECK=${options.enable_access_check}",
                         "-DTOML11_INSTALL=ON",
                         "-DTOML11_BUILD_EXAMPLES=OFF",
                         "-DTOML11_BUILD_TESTS=OFF",
                         "-DTOML11_BUILD_TOML_TESTS=OFF",
                         "-DTOML11_TEST_WITH_ASAN=OFF",
-                        "-DTOML11_TEST_WITH_UBSAN=OFF"
-                    ]
+                        "-DTOML11_TEST_WITH_UBSAN=OFF",
+                    ],
                 },
                 "build": {
                     "cmd": "cmake-install-all",
-                    "build_dir": "build"
+                    "build_dir": "build",
                 },
                 "copy_license": {
                     "cmd": "install-file",
                     "source_file": "src/LICENSE", // Replace: License file path
-                    "destination_dir": "."
-                }
+                    "destination_dir": ".",
+                },
             },
-            "license": "LICENSE" // Replace: License file path
-        }
-    ]
+            "license": "LICENSE", // Replace: License file path
+        },
+    ],
 }

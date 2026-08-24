@@ -1,0 +1,54 @@
+{
+    "repository": "https://github.com/SOCI/soci",
+    "entries": [
+        {
+            "version": "4.1.4",
+            "options": {
+                "shared": false
+            },
+            "dependencies": {
+                // Declare dependencies ...
+                "fmtlib.fmt": {
+                    "version": ["..."]
+                }
+            },
+            "steps": {
+                "order": ["download", "download_amalgamation_sqlite3", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "5b338e1ba2ea55286e04b18656c4d3f9e83aaeaaf986762cc533d24b4b7c9dd3"
+                },
+                "download_amalgamation_sqlite3": {
+                    // sqlite3 は amalgamation 版を使う
+                    "cmd": "github-download",
+                    "ref": "46a41f159b163d50fbb914c729d237e6b54ae72d",
+                    "hash": "3a8b664828a29334dfd801a00ff70bfded69f803fd9acb4b9262e3c70fa49966",
+                    "author": "vadz",
+                    "repo": "sqlite-amalgamation",
+                    "archive_path": "sqlite-amalgamation-src.zip",
+                    "output_dir": "src/3rdparty/sqlite3"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DSOCI_SHARED=${options.shared}",
+                        "-DSOCI_INSTALL=ON",
+                        "-DSOCI_TESTS=OFF",
+                        "-DWITH_BOOST=OFF"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE_1_0.txt",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE_1_0.txt"
+        }
+    ]
+}

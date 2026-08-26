@@ -32,17 +32,11 @@
                         ],
                         "non-monolithic": {
                             "condition": "${options.shared_monolithic:not}",
-                            "args": [
-                                "-DBUILD_SHARED_LIBS=${options.shared}",
-                                "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=OFF"
-                            ]
+                            "args": ["-DBUILD_SHARED_LIBS=${options.shared}", "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=OFF"]
                         },
                         "monolithic": {
                             "condition": "${options.shared_monolithic}",
-                            "args": [
-                                "-DBUILD_SHARED_LIBS=ON",
-                                "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=ON"
-                            ]
+                            "args": ["-DBUILD_SHARED_LIBS=ON", "-DABSL_BUILD_MONOLITHIC_SHARED_LIBS=ON"]
                         }
                     }
                 },
@@ -90,7 +84,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "d9defe2403f65d71c7a50d3cda206f5f8eddad81c8529ee734c3031346766b93"
+                    "hash": "e531081ce68fea3b815b88caffe14fab2be6f365124e1ff78b5c9c0316a78472"
                 }
             }
         }

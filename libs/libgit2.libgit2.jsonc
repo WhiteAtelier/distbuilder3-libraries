@@ -1,0 +1,48 @@
+{
+    "repository": "https://github.com/libgit2/libgit2",
+    "entries": [
+        {
+            "version": "1.9.7",
+            "options": {
+                "shared": false
+            },
+            "dependencies": {},
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "f0b6d303fb659bd5a9d5343bb2c7795a21f5cb29ae7336ccfdb980921af07162",
+                    "error_ok": true
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": {
+                        "common": [
+                            "-DBUILD_SHARED_LIBS=${options.shared}",
+                            "-DBUILD_TESTS=OFF",
+                            "-DBUILD_BENCHMARKS=OFF",
+                            "-DBUILD_CLI=OFF",
+                            "-DBUILD_EXAMPLES=OFF",
+                            "-DBUILD_FUZZERS=OFF"
+                        ],
+                        "msvc": {
+                            "args": ["-DSTATIC_CRT=OFF"],
+                            "condition": "${options.is_windows}"
+                        }
+                    }
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/COPYING",
+                    "destination_dir": "."
+                }
+            },
+            "license": "COPYING"
+        }
+    ]
+}

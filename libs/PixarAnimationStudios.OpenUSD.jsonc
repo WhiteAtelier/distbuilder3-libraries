@@ -49,7 +49,7 @@
                 "download": {
                     "cmd": "github-download",
                     "ref": "v${version}",
-                    "hash": "27d8993ea85209a28e57be035d8fda485bc18091ef0e89d96d536fb1f3532240" // Replace: Hash
+                    "hash": "27d8993ea85209a28e57be035d8fda485bc18091ef0e89d96d536fb1f3532240"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
@@ -192,6 +192,20 @@
                 }
             },
             "license": "LICENSE.txt"
+        },
+        {
+            "version": "26.08",
+            "base": "26.05",
+            "dependencies": {
+                "AcademySoftwareFoundation.MaterialX": {
+                    "version": ["1.39.5"]
+                }
+            },
+            "steps": {
+                "download": {
+                    "hash": "40523c990ce3ef8200fdb155a9db742818e185d73bd04180aa2221af7f3380b1"
+                }
+            }
         }
     ]
 }

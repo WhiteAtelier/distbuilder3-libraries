@@ -11,7 +11,7 @@
                 "download": {
                     "cmd": "github-download",
                     "ref": "v${version}",
-                    "hash": "56200ba88f14907c1086547ce92c01511b4c67ea0de798c4a35b49a2e8d8474e"
+                    "hash": "410e40bd154d359954f55114a18bbde4cef743f98b50a4b5d44493f1f62bdacd"
                 },
                 "configure": {
                     "cmd": "cmake-configure",

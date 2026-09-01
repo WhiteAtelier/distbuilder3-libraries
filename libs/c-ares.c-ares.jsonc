@@ -1,0 +1,44 @@
+{
+    "repository": "https://github.com/c-ares/c-ares",
+    "entries": [
+        {
+            "version": "1.34.8",
+            "options": {
+                "shared": false
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "v${version}",
+                    "hash": "3748e33a27db7503644bd6f1ffb4f1ba9bf45b6328d07dd7c33ed4805827d9a2" // Replace: Hash
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DCARES_STATIC=${options.shared:not}",
+                        "-DCARES_SHARED=${options.shared}",
+                        "-DCARES_INSTALL=1",
+                        "-DCARES_STATIC_PIC=0",
+                        "-DCARES_BUILD_TESTS=0",
+                        "-DCARES_BUILD_CONTAINER_TESTS=0",
+                        "-DCARES_BUILD_TOOLS=0",
+                        "-DCARES_SYMBOL_HIDING=1",
+                        "-DCARES_THREADS=1",
+                        "-DCARES_MSVC_STATIC_RUNTIME=0"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.md",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.md"
+        }
+    ]
+}

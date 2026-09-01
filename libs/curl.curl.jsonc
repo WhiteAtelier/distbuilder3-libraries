@@ -1,0 +1,64 @@
+{
+    "repository": "https://github.com/curl/curl",
+    "entries": [
+        {
+            "version": "8.21.0",
+            "options": {
+                "shared": false,
+                "with_cares": false,
+                "with_zlib": false,
+                "with_zstd": false
+            },
+            "dependencies": {
+                "c-ares.c-ares": {
+                    "version": ["..."],
+                    "condition": "${options.with_cares}"
+                },
+                "madler.zlib": {
+                    "version": ["..."],
+                    "condition": "${options.with_zlib}"
+                },
+                "facebook.zstd": {
+                    "version": ["..."],
+                    "condition": "${options.with_zstd}"
+                }
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "curl-8_21_0",
+                    "hash": "56bc8430ca26d4d65fc795f6f812acf19197517aee81b0ee2490747a60233a9a"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DBUILD_CURL_EXE=OFF",
+                        "-DBUILD_SHARED_LIBS=${options.shared}",
+                        "-DBUILD_STATIC_LIBS=${options.shared:not}",
+                        "-DBUILD_STATIC_CURL=OFF",
+                        "-DENABLE_ARES=${options.with_cares}",
+                        "-DCURL_DISABLE_INSTALL=OFF",
+                        "-DCURL_BUILD_EVERYTHING=OFF",
+                        "-DBUILD_LIBCURL_DOCS=OFF",
+                        "-DBUILD_MISC_DOCS=OFF",
+                        "-DENABLE_CURL_MANUAL=OFF",
+                        "-DBUILD_TESTING=OFF",
+                        "-DBUILD_EXAMPLES=OFF",
+                        "-DCURL_USE_LIBPSL=OFF"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/COPYING",
+                    "destination_dir": "."
+                }
+            },
+            "license": "COPYING"
+        }
+    ]
+}

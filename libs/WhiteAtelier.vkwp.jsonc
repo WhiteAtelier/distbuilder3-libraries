@@ -42,7 +42,16 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "9add1e31f36cd814e63d1813e819c73c51ae528cfb95bb131a5d75fffae1e3e0"
+                    "hash": "a83d843c5dcf2bfdc2f0f5325d7e5f80089e1d2f61766f113c9d85f129114a54"
+                }
+            }
+        },
+        {
+            "version": "2.3.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "b57820c7812e795f6d064515203d104d990d9f0f78c3831bc3617bc0d3a88e70"
                 }
             }
         }

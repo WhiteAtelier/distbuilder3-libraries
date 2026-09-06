@@ -7,7 +7,10 @@
                 "shared": false,
                 "with_cares": false,
                 "with_zlib": false,
-                "with_zstd": false
+                "with_zstd": false,
+                "enable_ssl": true,
+                "use_schannel": true,
+                "use_mbedtls": false
             },
             "dependencies": {
                 "c-ares.c-ares": {
@@ -21,6 +24,16 @@
                 "facebook.zstd": {
                     "version": ["..."],
                     "condition": "${options.with_zstd}"
+                },
+                "Mbed-TLS.mbedtls": {
+                    "version": ["..."],
+                    "condition": {
+                        "op": "and",
+                        "values": [
+                            "${options.enable_ssl}",
+                            "${options.use_mbedtls}"
+                        ]
+                    }
                 }
             },
             "steps": {
@@ -32,21 +45,42 @@
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "args": [
-                        "-DBUILD_CURL_EXE=OFF",
-                        "-DBUILD_SHARED_LIBS=${options.shared}",
-                        "-DBUILD_STATIC_LIBS=${options.shared:not}",
-                        "-DBUILD_STATIC_CURL=OFF",
-                        "-DENABLE_ARES=${options.with_cares}",
-                        "-DCURL_DISABLE_INSTALL=OFF",
-                        "-DCURL_BUILD_EVERYTHING=OFF",
-                        "-DBUILD_LIBCURL_DOCS=OFF",
-                        "-DBUILD_MISC_DOCS=OFF",
-                        "-DENABLE_CURL_MANUAL=OFF",
-                        "-DBUILD_TESTING=OFF",
-                        "-DBUILD_EXAMPLES=OFF",
-                        "-DCURL_USE_LIBPSL=OFF"
-                    ]
+                    "args": {
+                        "default": [
+                            "-DBUILD_CURL_EXE=OFF",
+                            "-DBUILD_SHARED_LIBS=${options.shared}",
+                            "-DBUILD_STATIC_LIBS=${options.shared:not}",
+                            "-DBUILD_STATIC_CURL=OFF",
+                            "-DENABLE_ARES=${options.with_cares}",
+                            "-DCURL_DISABLE_INSTALL=OFF",
+                            "-DCURL_BUILD_EVERYTHING=OFF",
+                            "-DBUILD_LIBCURL_DOCS=OFF",
+                            "-DBUILD_MISC_DOCS=OFF",
+                            "-DENABLE_CURL_MANUAL=OFF",
+                            "-DBUILD_TESTING=OFF",
+                            "-DBUILD_EXAMPLES=OFF",
+                            "-DCURL_USE_LIBPSL=OFF",
+                            "-DCURL_ENABLE_SSL=${options.enable_ssl}"
+                        ],
+                        "ssl_win32": {
+                            "condition": {
+                                "op": "and",
+                                "values": [
+                                    "${options.enable_ssl}",
+                                    "${is_windows}"
+                                ]
+                            },
+                            "args": [
+                                "-DCURL_USE_SCHANNEL=${options.use_schannel}"
+                            ]
+                        },
+                        "ssl": {
+                            "condition": "${options.enable_ssl}",
+                            "args": [
+                                "-DCURL_USE_MBEDTLS=${options.use_mbedtls}"
+                            ]
+                        }
+                    }
                 },
                 "build": {
                     "cmd": "cmake-install-all",

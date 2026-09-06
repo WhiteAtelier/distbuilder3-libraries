@@ -1,0 +1,52 @@
+{
+    "repository": "https://github.com/Mbed-TLS/mbedtls",
+    "entries": [
+        {
+            "version": "4.2.0",
+            "options": {
+                "shared": false
+            },
+            "steps": {
+                "order": [
+                    "download",
+                    "extract",
+                    "configure",
+                    "build",
+                    "copy_license"
+                ],
+                "download": {
+                    "cmd": "download",
+                    "url": "https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-4.2.0/mbedtls-4.2.0.tar.bz2",
+                    "output": "src.tar.bz2",
+                    "hash": "2bed9d713b4668f76553b097e72b8aa30bc8f112a940d7ae228d524bbde6ffea",
+                    "access_token_site": "github"
+                },
+                "extract": {
+                    "cmd": "extract",
+                    "input": "src.tar.bz2",
+                    "output": "src",
+                    "error_ok": true
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "source_dir": "src/mbedtls-${version}",
+                    "args": [
+                        "-DENABLE_TESTING=OFF",
+                        "-DUSE_STATIC_MBEDTLS_LIBRARY=${options.shared:not}",
+                        "-DUSE_SHARED_MBEDTLS_LIBRARY=${options.shared}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/mbedtls-${version}/LICENSE",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE"
+        }
+    ]
+}

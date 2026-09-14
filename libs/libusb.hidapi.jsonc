@@ -1,0 +1,37 @@
+{
+    "repository": "https://github.com/libusb/hidapi",
+    "entries": [
+        {
+            "version": "0.15.0",
+            "options": {
+                "shared": false
+            },
+            "steps": {
+                "order": ["download", "configure", "build", "copy_license"],
+                "download": {
+                    "cmd": "github-download",
+                    "ref": "hidapi-${version}",
+                    "hash": "1f3ebe05566d2354c3578f5b2dba28e0bf9b3b359d1f8d3029c706dc1ffbdcd6"
+                },
+                "configure": {
+                    "cmd": "cmake-configure",
+                    "args": [
+                        "-DHIDAPI_WITH_TESTS=OFF",
+                        "-DHIDAPI_BUILD_HIDTEST=OFF",
+                        "-DBUILD_SHARED_LIBS=${options.shared}"
+                    ]
+                },
+                "build": {
+                    "cmd": "cmake-install-all",
+                    "build_dir": "build"
+                },
+                "copy_license": {
+                    "cmd": "install-file",
+                    "source_file": "src/LICENSE.txt",
+                    "destination_dir": "."
+                }
+            },
+            "license": "LICENSE.txt"
+        }
+    ]
+}

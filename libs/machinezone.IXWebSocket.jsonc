@@ -58,7 +58,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "9888fb27589af157fe22af285848db2a5555628b312089c0228a530872e7b876"
+                    "hash": "f6530555b5dc302f6efbb08ab2b0db95f0c9e4ecb2ff583c450229ab9277fcbb"
                 }
             }
         }

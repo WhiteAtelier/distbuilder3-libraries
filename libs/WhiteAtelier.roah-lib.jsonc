@@ -156,6 +156,20 @@
                     "hash": "a4e64a7f6fdc2958aa683f2726d9ccd9acf750e2d311a9d1599001e3e9cb2bc5"
                 }
             }
+        },
+        {
+            "version": "1.11.0",
+            "base": "${previous}",
+            "dependencies": {
+                "machinezone.IXWebSocket": {
+                    "version": ["12.0.0", "..."]
+                }
+            },
+            "steps": {
+                "download": {
+                    "hash": "ad334c26d402a4128b00b33a01658a51187aa1bf7572d135887ae6167c79805f"
+                }
+            }
         }
     ]
 }

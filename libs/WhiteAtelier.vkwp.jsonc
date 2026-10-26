@@ -72,6 +72,15 @@
                     "hash": "db2335b43d3a14c6642762ce81f7d217fa99fe2b4caddd9d56c4b7b6c1733462"
                 }
             }
+        },
+        {
+            "version": "2.5.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "9551a880f2283ae451be5051cb54e7cf35a5234fa1131e9afc9a1f294ad2a329"
+                }
+            }
         }
     ]
 }

@@ -170,6 +170,15 @@
                     "hash": "554da6c38c53debd736d499c408b1da560b4326262a0563f698275d1e92dc9cf"
                 }
             }
+        },
+        {
+            "version": "1.12.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "42af6645469ea82d5a2bd28949605a489895cb88ee4c08066fa1cc42c237159d"
+                }
+            }
         }
     ]
 }

@@ -19,10 +19,7 @@
                     "version": ["..."],
                     "condition": {
                         "op": "or",
-                        "values": [
-                            "${options.build_roah_logger}",
-                            "${options.build_roah_logging_web_viewer_app}"
-                        ]
+                        "values": ["${options.build_roah_logger}", "${options.build_roah_logging_web_viewer_app}"]
                     }
                 },
                 "ToruNiina.toml11": {
@@ -33,20 +30,14 @@
                     "version": ["...", "11.4.6"],
                     "condition": {
                         "op": "or",
-                        "values": [
-                            "${options.enable_logger_webv_sink}",
-                            "${options.build_roah_logging_web_viewer_app}"
-                        ]
+                        "values": ["${options.enable_logger_webv_sink}", "${options.build_roah_logging_web_viewer_app}"]
                     }
                 },
                 "nlohmann.json": {
                     "version": ["..."],
                     "condition": {
                         "op": "or",
-                        "values": [
-                            "${options.enable_logger_webv_sink}",
-                            "${options.build_roah_logging_web_viewer_app}"
-                        ]
+                        "values": ["${options.enable_logger_webv_sink}", "${options.build_roah_logging_web_viewer_app}"]
                     }
                 },
                 "CLIUtils.CLI11": {
@@ -168,6 +159,15 @@
             "steps": {
                 "download": {
                     "hash": "ad334c26d402a4128b00b33a01658a51187aa1bf7572d135887ae6167c79805f"
+                }
+            }
+        },
+        {
+            "version": "1.12.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "554da6c38c53debd736d499c408b1da560b4326262a0563f698275d1e92dc9cf"
                 }
             }
         }

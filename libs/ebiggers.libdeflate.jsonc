@@ -54,7 +54,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "d7715585a7e56341cf059da4afd6c274b96af50dd619d2be51e5dbe0f46a04a1"
+                    "hash": "d46510b2f72de693a7dab94a1d8a97902389dc2ac8805bf9b4962c00ab4647ee"
                 }
             }
         },
@@ -63,7 +63,7 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "63116b23d8b390bd6273e48601945fd8b2b78ac25871cb1dd812b9e83737d712"
+                    "hash": "f0b63d6375634d32dba51efaa0a3d7eb72130fc3ee9496d8c08ace287d375d3c"
                 }
             }
         },
@@ -72,7 +72,16 @@
             "base": "${previous}",
             "steps": {
                 "download": {
-                    "hash": "d85139373397044b74b7257ab19e4b862492fae99af2484a5cc986c7695f203b"
+                    "hash": "3a03e8b926cfaead2588de206a00c00b41a6cbc9730f1d9a4ec5a4baa844b2c9"
+                }
+            }
+        },
+        {
+            "version": "1.26",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "b2dfeb6ac67919118956f3eb46287c882d289b47847001ec859dabecb121958e"
                 }
             }
         }

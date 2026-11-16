@@ -24,7 +24,7 @@
                 "download": {
                     "cmd": "github-download",
                     "ref": "${version}",
-                    "hash": "8db8b89f0f0e637151e80969cd62668bcda6c0754b92c36d8d726e06c5927ca8"
+                    "hash": "b393fe249bdab1258159dbb62e05b8af1ab631c1bdadedb3c3fa301bda2c2249"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
@@ -56,6 +56,15 @@
                 }
             },
             "license": "LICENSE"
+        },
+        {
+            "version": "0.33.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "309d6683e9e92880381e03b8e0841f884923c721ae674d6630acc61d518b3a66"
+                }
+            }
         }
     ]
 }

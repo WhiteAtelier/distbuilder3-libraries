@@ -95,6 +95,32 @@
                     "error_ok": true
                 }
             }
+        },
+        {
+            "version": "3.4.17",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "51c78b28d06156615229bb52f4625d5ebce63f4fcff7d6dbafede10c6973ab38"
+                }
+            }
+        },
+        {
+            "version": "3.5.4",
+            "base": "${previous}",
+            "dependencies": {
+                "AcademySoftwareFoundation.Imath": {
+                    "version": ["3.2.3"]
+                },
+                "aous72.OpenJPH": {
+                    "version": ["0.32.0", "..."]
+                }
+            },
+            "steps": {
+                "download": {
+                    "hash": "b54dde973fa32c9c750feb84e3418443387a241f9f7a91b60aac59ad1cecc095"
+                }
+            }
         }
     ]
 }

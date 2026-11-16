@@ -58,6 +58,15 @@
             "license": "LICENSE"
         },
         {
+            "version": "0.32.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "775a562435cfd4550e8df773335aed82f9ff55691897e05aa3bc54d24e71e025"
+                }
+            }
+        },
+        {
             "version": "0.33.0",
             "base": "${previous}",
             "steps": {

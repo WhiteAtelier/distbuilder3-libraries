@@ -12,7 +12,7 @@
                 "download": {
                     "cmd": "github-download",
                     "ref": "v${version}",
-                    "hash": "411b6162e1ac74cdcd95d4d51eb1005302264a9c4ccb5331992c26fd96e7f438"
+                    "hash": "66362fa163b569af06eb244b2fe45cc15264d42e7046599526253927ac572ae1"
                 },
                 "configure": {
                     "cmd": "cmake-configure",

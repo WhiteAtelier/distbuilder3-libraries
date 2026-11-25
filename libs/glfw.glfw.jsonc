@@ -4,26 +4,33 @@
         {
             "version": "3.3.10",
             "options": {
-                "shared": false
+                "shared": false,
+                "useWayland": false
             },
             "steps": {
                 "order": ["download", "configure", "build", "copy_license"],
                 "download": {
                     "cmd": "github-download",
                     "ref": "${version}",
-                    "hash": "8c9c4a9b108f4f760b583b70720b3bef55a434f93922f05c027398c948d24f02"
+                    "hash": "550c55a997869024b137683936c27a7d8b27ae2e178cfa4aad9d953a3e8321fc"
                 },
                 "configure": {
                     "cmd": "cmake-configure",
-                    "args": [
-                        "-DBUILD_SHARED_LIBS=${options.shared}",
-                        "-DUSE_MSVC_RUNTIME_LIBRARY_DLL=OFF",
-                        "-DGLFW_BUILD_DOCS=OFF",
-                        "-DGLFW_BUILD_EXAMPLES=OFF",
-                        "-DGLFW_BUILD_TEST=OFF",
-                        "-DGLFW_INSTALL=ON",
-                        "-DGLFW_BUILD_WIN32=${is_windows}"
-                    ]
+                    "args": {
+                        "common": [
+                            "-DBUILD_SHARED_LIBS=${options.shared}",
+                            "-DUSE_MSVC_RUNTIME_LIBRARY_DLL=OFF",
+                            "-DGLFW_BUILD_DOCS=OFF",
+                            "-DGLFW_BUILD_EXAMPLES=OFF",
+                            "-DGLFW_BUILD_TEST=OFF",
+                            "-DGLFW_INSTALL=ON",
+                            "-DGLFW_BUILD_WIN32=${is_windows}"
+                        ],
+                        "linux": {
+                            "args": ["-DGLFW_USE_WAYLAND=${options.useWayland}"],
+                            "condition": "${is_linux}"
+                        }
+                    }
                 },
                 "build": {
                     "cmd": "cmake-install-all",
@@ -40,9 +47,29 @@
         {
             "version": "3.4",
             "base": "${previous}",
+            "options": {
+                "useX11": true, // このバージョンからオプション化された
+                "useWayland": true // このバージョンからデフォルト on に
+            },
             "steps": {
                 "download": {
                     "hash": "18342418645b8707745b3dae3074691aece6e38d1078b579fb202bc4ec8ba4e8"
+                },
+                "configure": {
+                    "args": {
+                        "linux": {
+                            "args": ["-DGLFW_BUILD_X11=${options.useX11}", "-DGLFW_BUILD_WAYLAND=${options.useWayland}"]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "version": "3.5.1",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "d3f0153c48ad0c6fc0e20807c369765a186a1e8490d481e8f34c53b3e945bb9a"
                 }
             }
         }

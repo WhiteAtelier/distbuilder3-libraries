@@ -48,8 +48,9 @@
             "version": "3.4",
             "base": "${previous}",
             "options": {
-                "useX11": true, // このバージョンからオプション化された
-                "useWayland": true // このバージョンからデフォルト on に
+                "useWayland": null, // このバージョンで "use" は削除
+                "buildForX11": true,
+                "buildForWayland": true
             },
             "steps": {
                 "download": {
@@ -57,8 +58,13 @@
                 },
                 "configure": {
                     "args": {
-                        "linux": {
-                            "args": ["-DGLFW_BUILD_X11=${options.useX11}", "-DGLFW_BUILD_WAYLAND=${options.useWayland}"]
+                        "linux": null, // 削除
+                        "linux2": {
+                            "args": [
+                                "-DGLFW_BUILD_X11=${options.buildForX11}",
+                                "-DGLFW_BUILD_WAYLAND=${options.buildForWayland}"
+                            ],
+                            "condition": "${is_linux}"
                         }
                     }
                 }

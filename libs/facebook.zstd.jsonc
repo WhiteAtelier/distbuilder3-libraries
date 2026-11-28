@@ -21,19 +21,13 @@
                 "madler.zlib": {
                     "condition": {
                         "op": "and",
-                        "values": [
-                            "${options.zlib_support}",
-                            "${options.build_program}"
-                        ]
+                        "values": ["${options.zlib_support}", "${options.build_program}"]
                     }
                 },
                 "lz4.lz4": {
                     "condition": {
                         "op": "and",
-                        "values": [
-                            "${options.lz4_support}",
-                            "${options.build_program}"
-                        ]
+                        "values": ["${options.lz4_support}", "${options.build_program}"]
                     }
                 }
             },
@@ -103,6 +97,15 @@
                     "args": {
                         "bugfix": null
                     }
+                }
+            }
+        },
+        {
+            "version": "1.6.0",
+            "base": "${previous}",
+            "steps": {
+                "download": {
+                    "hash": "3aec8ad538875740398aa30717f7f4f4f983cf0431fae230e3f8745419a06673"
                 }
             }
         }
